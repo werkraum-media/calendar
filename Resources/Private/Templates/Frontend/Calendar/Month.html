@@ -1,0 +1,42 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    data-namespace-typo3-fluid="true">
+
+    <h2>{month.dateTimeInstance -> f:format.date(format: '%B %Y')}</h2>
+
+    <f:link.action action="month" controller="Frontend\Calendar" arguments="{month: month.previousMonth}">
+        Prev Month
+    </f:link.action>
+    <f:link.action action="month" controller="Frontend\Calendar" arguments="{month: month.nextMonth}">
+        Next Month
+    </f:link.action>
+
+    <table>
+        <tr>
+            <th>KW</th>
+            <th>Mo</th>
+            <th>Di</th>
+            <th>Mi</th>
+            <th>Do</th>
+            <th>Fr</th>
+            <th>Sa</th>
+            <th>So</th>
+        </tr>
+        <f:for each="{month.weeks}" as="week">
+            <tr class="{f:if(condition: week.active, then: 'active', else: 'inactive')}">
+                <td>
+                    <f:link.action action="week" controller="Frontend\Calendar" arguments="{week: week.asUrlArgument}">
+                        {week.dateTimeInstance -> f:format.date(format: '%V')}
+                    </f:link.action>
+                </td>
+                <f:for each="{week.days}" as="day">
+                    <td class="{f:if(condition: day.active, then: 'active', else: 'inactive')}">
+                        <f:link.action action="day" controller="Frontend\Calendar" arguments="{day: day.asUrlArgument}">
+                            {day.dateTimeInstance -> f:format.date(format: 'd')}
+                        </f:link.action>
+                    </td>
+                </f:for>
+            </tr>
+        </f:for>
+    </table>
+
+</html>
