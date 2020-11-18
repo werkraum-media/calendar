@@ -3,23 +3,23 @@
 
     <h2>{month.dateTimeInstance -> f:format.date(format: '%B %Y')}</h2>
 
-    <f:link.action action="month" controller="Frontend\Calendar" arguments="{month: month.previousMonth}">
-        Prev Month
+    <f:link.action class="calendar browse month previous" action="month" controller="Frontend\Calendar" arguments="{month: month.previousMonth}">
+        {f:translate(key: 'browse.month.previous', extensionName: 'calendar')}
     </f:link.action>
-    <f:link.action action="month" controller="Frontend\Calendar" arguments="{month: month.nextMonth}">
-        Next Month
+    <f:link.action class="calendar browse month next" action="month" controller="Frontend\Calendar" arguments="{month: month.nextMonth}">
+        {f:translate(key: 'browse.month.next', extensionName: 'calendar')}
     </f:link.action>
 
-    <table>
+    <table class="calender monthly">
         <tr>
-            <th>KW</th>
-            <th>Mo</th>
-            <th>Di</th>
-            <th>Mi</th>
-            <th>Do</th>
-            <th>Fr</th>
-            <th>Sa</th>
-            <th>So</th>
+            <th>{f:translate(key: 'calendar_week.shorthand', extensionName: 'calendar')}</th>
+            <th>{f:translate(key: 'weekday.monday.shorthand', extensionName: 'calendar')}</th>
+            <th>{f:translate(key: 'weekday.tuesday.shorthand', extensionName: 'calendar')}</th>
+            <th>{f:translate(key: 'weekday.wednesday.shorthand', extensionName: 'calendar')}</th>
+            <th>{f:translate(key: 'weekday.thursday.shorthand', extensionName: 'calendar')}</th>
+            <th>{f:translate(key: 'weekday.friday.shorthand', extensionName: 'calendar')}</th>
+            <th>{f:translate(key: 'weekday.saturday.shorthand', extensionName: 'calendar')}</th>
+            <th>{f:translate(key: 'weekday.sunday.shorthand', extensionName: 'calendar')}</th>
         </tr>
         <f:for each="{month.weeks}" as="week">
             <tr class="{f:if(condition: week.active, then: 'active', else: 'inactive')}">
