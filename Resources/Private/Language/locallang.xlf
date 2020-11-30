@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="messages" date="2020-10-19T17:30:54Z" product-name="calendar">
+        <header/>
+        <body>
+            <trans-unit id="browse.month.previous">
+                <source>Previous month</source>
+            </trans-unit>
+            <trans-unit id="browse.month.next">
+                <source>Next month</source>
+            </trans-unit>
+            <trans-unit id="browse.week.previous">
+                <source>Previous week</source>
+            </trans-unit>
+            <trans-unit id="browse.week.next">
+                <source>Next week</source>
+            </trans-unit>
+            <trans-unit id="browse.day.previous">
+                <source>Previous day</source>
+            </trans-unit>
+            <trans-unit id="browse.day.next">
+                <source>Next day</source>
+            </trans-unit>
+            <trans-unit id="view.calendar_week">
+                <source>Calender week</source>
+            </trans-unit>
+            <trans-unit id="view.calendar_week.shorthand">
+                <source>CW</source>
+            </trans-unit>
+            <trans-unit id="view.month">
+                <source>Monthly</source>
+            </trans-unit>
+            <trans-unit id="view.week">
+                <source>Weekly</source>
+            </trans-unit>
+            <trans-unit id="view.day">
+                <source>Day</source>
+            </trans-unit>
+            <trans-unit id="weekday.monday">
+                <source>Monday</source>
+            </trans-unit>
+            <trans-unit id="weekday.tuesday">
+                <source>Tuesday</source>
+            </trans-unit>
+            <trans-unit id="weekday.wednesday">
+                <source>Wednesday</source>
+            </trans-unit>
+            <trans-unit id="weekday.thursday">
+                <source>Thursday</source>
+            </trans-unit>
+            <trans-unit id="weekday.friday">
+                <source>Friday</source>
+            </trans-unit>
+            <trans-unit id="weekday.saturday">
+                <source>Saturday</source>
+            </trans-unit>
+            <trans-unit id="weekday.sunday">
+                <source>Sunday</source>
+            </trans-unit>
+            <trans-unit id="weekday.monday.shorthand">
+                <source>Mon</source>
+            </trans-unit>
+            <trans-unit id="weekday.tuesday.shorthand">
+                <source>Tue</source>
+            </trans-unit>
+            <trans-unit id="weekday.wednesday.shorthand">
+                <source>Wed</source>
+            </trans-unit>
+            <trans-unit id="weekday.thursday.shorthand">
+                <source>Thu</source>
+            </trans-unit>
+            <trans-unit id="weekday.friday.shorthand">
+                <source>Fri</source>
+            </trans-unit>
+            <trans-unit id="weekday.saturday.shorthand">
+                <source>Sat</source>
+            </trans-unit>
+            <trans-unit id="weekday.sunday.shorthand">
+                <source>Sun</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
