@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file source-language="en" datatype="plaintext" original="messages" date="2020-10-19T17:30:54Z" product-name="calendar">
+    <file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2020-10-19T17:30:54Z" product-name="calendar">
         <header/>
         <body>
             <trans-unit id="browse.month.previous">
@@ -39,11 +39,11 @@
                 <source>Day</source>
                 <target>Tagesansicht</target>
             </trans-unit>
-            <trans-unit id="calendar_week">
+            <trans-unit id="view.calendar_week">
                 <source>Calender week</source>
                 <target>Kalenderwoche</target>
             </trans-unit>
-            <trans-unit id="calendar_week.shorthand">
+            <trans-unit id="view.calendar_week.shorthand">
                 <source>CW</source>
                 <target>KW</target>
             </trans-unit>

@@ -21,10 +21,10 @@
             <trans-unit id="browse.day.next">
                 <source>Next day</source>
             </trans-unit>
-            <trans-unit id="calendar_week">
+            <trans-unit id="view.calendar_week">
                 <source>Calender week</source>
             </trans-unit>
-            <trans-unit id="calendar_week.shorthand">
+            <trans-unit id="view.calendar_week.shorthand">
                 <source>CW</source>
             </trans-unit>
             <trans-unit id="view.month">
