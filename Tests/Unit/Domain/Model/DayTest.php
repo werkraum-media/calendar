@@ -70,7 +70,19 @@ class DayTest extends TestCase
         );
 
         self::assertInstanceOf(\DateTimeImmutable::class, $subject->getDateTimeInstance());
-        self::assertSame($dateTimeInstance->format('U'), $subject->getDateTimeInstance()->format('U'));
+    }
+
+    /**
+     * @test
+     */
+    public function providedDateTimeInstanceHasExpectedDay(): void
+    {
+        $dateTimeInstance = new \DateTime();
+        $subject = new Day(
+            $dateTimeInstance
+        );
+
+        self::assertSame($dateTimeInstance->format('d.m.Y'), $subject->getDateTimeInstance()->format('d.m.Y'));
     }
 
     /**
