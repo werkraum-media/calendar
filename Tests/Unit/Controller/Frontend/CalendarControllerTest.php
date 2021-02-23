@@ -25,6 +25,7 @@ use PHPUnit\Framework\TestCase;
 use Prophecy\Argument as ProphetArgument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\Argument;
 use TYPO3\CMS\Extbase\Mvc\Controller\Arguments;
 use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
@@ -35,6 +36,7 @@ use WerkraumMedia\Calendar\Domain\Model\Day;
 use WerkraumMedia\Calendar\Domain\Model\Month;
 use WerkraumMedia\Calendar\Domain\Model\Week;
 use WerkraumMedia\Calendar\Domain\Model\Year;
+use WerkraumMedia\Calendar\Events\AssignTemplateVariables;
 use WerkraumMedia\Calendar\Tests\ForcePropertyTrait;
 
 /**
@@ -95,6 +97,10 @@ class CalendarControllerTest extends TestCase
     public function addsYearToView(): void
     {
         $subject = new CalendarController();
+
+        $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
+        $eventDispatcher->dispatch(ProphetArgument::type(AssignTemplateVariables::class))->shouldBeCalled();
+        $subject->injectEventDispatcher($eventDispatcher->reveal());
 
         $year = $this->prophesize(Year::class);
         $view = $this->prophesize(ViewInterface::class);
@@ -159,6 +165,10 @@ class CalendarControllerTest extends TestCase
     {
         $subject = new CalendarController();
 
+        $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
+        $eventDispatcher->dispatch(ProphetArgument::type(AssignTemplateVariables::class))->shouldBeCalled();
+        $subject->injectEventDispatcher($eventDispatcher->reveal());
+
         $month = $this->prophesize(Month::class);
         $view = $this->prophesize(ViewInterface::class);
         $view->assignMultiple([
@@ -221,6 +231,10 @@ class CalendarControllerTest extends TestCase
     public function addsWeekToView(): void
     {
         $subject = new CalendarController();
+
+        $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
+        $eventDispatcher->dispatch(ProphetArgument::type(AssignTemplateVariables::class))->shouldBeCalled();
+        $subject->injectEventDispatcher($eventDispatcher->reveal());
 
         $week = $this->prophesize(Week::class);
         $view = $this->prophesize(ViewInterface::class);
@@ -305,6 +319,10 @@ class CalendarControllerTest extends TestCase
     public function addsDayToView(): void
     {
         $subject = new CalendarController();
+
+        $eventDispatcher = $this->prophesize(EventDispatcherInterface::class);
+        $eventDispatcher->dispatch(ProphetArgument::type(AssignTemplateVariables::class))->shouldBeCalled();
+        $subject->injectEventDispatcher($eventDispatcher->reveal());
 
         $day = $this->prophesize(Day::class);
         $view = $this->prophesize(ViewInterface::class);
