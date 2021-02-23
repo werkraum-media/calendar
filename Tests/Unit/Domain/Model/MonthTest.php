@@ -129,6 +129,44 @@ class MonthTest extends TestCase
     /**
      * @test
      */
+    public function returnsAllDaysOfTheFebruaryMonth2021(): void
+    {
+        $subject = new Month(02, 2021);
+
+        $result = $subject->getDays();
+
+        self::assertCount(28, $result);
+        self::assertSame('2021-02-01', $result[0]->getDateTimeInstance()->format('Y-m-d'));
+        self::assertSame('2021-02-28', $result[27]->getDateTimeInstance()->format('Y-m-d'));
+    }
+
+    /**
+     * @test
+     */
+    public function returnsAllDaysOfTheJuneMonth2021(): void
+    {
+        $subject = new Month(06, 2021);
+
+        $result = $subject->getDays();
+
+        self::assertCount(30, $result);
+        self::assertSame('2021-06-01', $result[0]->getDateTimeInstance()->format('Y-m-d'));
+        self::assertSame('2021-06-30', $result[29]->getDateTimeInstance()->format('Y-m-d'));
+    }
+
+    /**
+     * @test
+     */
+    public function returnsSameDaysOnSecondCall(): void
+    {
+        $subject = new Month(06, 2021);
+
+        self::assertSame($subject->getDays(), $subject->getDays());
+    }
+
+    /**
+     * @test
+     */
     public function providesDateTimeInstance(): void
     {
         $subject = new Month(02, 2018);

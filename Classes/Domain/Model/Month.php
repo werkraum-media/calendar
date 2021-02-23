@@ -41,6 +41,11 @@ class Month
      */
     private $weeks = [];
 
+    /**
+     * @var Day[]
+     */
+    private $days = [];
+
     public function __construct(
         int $month,
         int $year
@@ -80,6 +85,23 @@ class Month
         }
 
         return $this->weeks;
+    }
+
+    public function getDays(): array
+    {
+        if ($this->days !== []) {
+            return $this->days;
+        }
+
+        $currentDay = $this->getDateTimeInstance()->modify('first day of this month');
+        $endOfWeek = $this->getDateTimeInstance()->modify('last day of this month');
+
+        while ($currentDay <= $endOfWeek) {
+            $this->days[] = new Day(\DateTime::createFromImmutable($currentDay));
+            $currentDay = $currentDay->modify('+1 day');
+        }
+
+        return $this->days;
     }
 
     public function getPreviousMonth(): Month
