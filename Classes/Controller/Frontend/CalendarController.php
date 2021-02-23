@@ -27,9 +27,35 @@ use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
 use WerkraumMedia\Calendar\Domain\Model\Day;
 use WerkraumMedia\Calendar\Domain\Model\Month;
 use WerkraumMedia\Calendar\Domain\Model\Week;
+use WerkraumMedia\Calendar\Domain\Model\Year;
 
 class CalendarController extends ActionController
 {
+    public function initializeYearAction()
+    {
+        if ($this->request->hasArgument('year') === false) {
+            $this->request->setArguments([
+                'year' => [
+                    'year' => date('Y'),
+                ],
+            ]);
+        }
+
+        $this->arguments->getArgument('year')
+            ->getPropertyMappingConfiguration()
+            ->allowAllProperties();
+    }
+
+    /**
+     * @Extbase\IgnoreValidation("year")
+     */
+    public function yearAction(Year $year)
+    {
+        $this->view->assignMultiple([
+            'year' => $year,
+        ]);
+    }
+
     public function initializeMonthAction()
     {
         if ($this->request->hasArgument('month') === false) {

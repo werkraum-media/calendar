@@ -34,6 +34,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "7.3"
+
       - name: Keep composer at 1.x
         run: sudo composer selfupdate --1
 
@@ -61,6 +66,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "7.3"
+
       - name: Install xmllint
         run: sudo apt-get install libxml2-utils
 
@@ -85,9 +95,6 @@ jobs:
       - name: PHPUnit configuration file
         run: xmllint --schema vendor/phpunit/phpunit/phpunit.xsd --noout phpunit.xml.dist
 
-      - name: PHPCodeSniffer configuration file
-        run: xmllint --schema vendor/squizlabs/php_codesniffer/phpcs.xsd --noout phpcs.xml.dist
-
       - name: Fetch schema for xliff
         run: wget https://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd --output-document=.Build/xliff-core-1.2-strict.xsd
 
@@ -101,6 +108,11 @@ jobs:
       - xml-linting
     steps:
       - uses: actions/checkout@v2
+
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "7.3"
 
       - name: Keep composer at 1.x
         run: sudo composer selfupdate --1
@@ -121,7 +133,7 @@ jobs:
         run: composer install --prefer-dist --no-progress --no-suggest
 
       - name: Coding Guideline
-        run: ./vendor/bin/phpcs
+        run: ./vendor/bin/ecs
 
   tests:
     runs-on: ubuntu-latest

@@ -21,10 +21,10 @@ namespace WerkraumMedia\Calendar\Tests\Unit\Domain\Model;
  * 02110-1301, USA.
  */
 
+use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use WerkraumMedia\Calendar\Domain\Model\Day;
 use WerkraumMedia\Calendar\Domain\Model\NullDataFactory;
-use PHPUnit\Framework\TestCase;
 
 /**
  * @covers WerkraumMedia\Calendar\Domain\Model\NullDataFactory

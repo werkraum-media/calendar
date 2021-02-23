@@ -34,6 +34,7 @@ use WerkraumMedia\Calendar\Controller\Frontend\CalendarController;
 use WerkraumMedia\Calendar\Domain\Model\Day;
 use WerkraumMedia\Calendar\Domain\Model\Month;
 use WerkraumMedia\Calendar\Domain\Model\Week;
+use WerkraumMedia\Calendar\Domain\Model\Year;
 use WerkraumMedia\Calendar\Tests\ForcePropertyTrait;
 
 /**
@@ -44,6 +45,68 @@ class CalendarControllerTest extends TestCase
 {
     use ProphecyTrait;
     use ForcePropertyTrait;
+
+    /**
+     * @test
+     */
+    public function setsCurrentYearAsDefaultArgument(): void
+    {
+        $subject = new CalendarController();
+
+        $arguments = $this->allowsMappingOfAllPropertiesForArgument('year')['arguments'];
+
+        $request = $this->prophesize(Request::class);
+        $request->hasArgument('year')->willReturn(false);
+        $request->setArguments([
+            'year' => [
+                'year' => date('Y'),
+            ],
+        ])->shouldBeCalled();
+
+        $this->forceProperty($subject, 'request', $request->reveal());
+        $this->forceProperty($subject, 'arguments', $arguments->reveal());
+
+        $subject->initializeYearAction();
+        $request->checkProphecyMethodsPredictions();
+    }
+
+    /**
+     * @test
+     */
+    public function allowsYearToBeMapped(): void
+    {
+        $subject = new CalendarController();
+
+        $arguments = $this->allowsMappingOfAllPropertiesForArgument('year')['arguments'];
+
+        $request = $this->prophesize(Request::class);
+        $request->hasArgument('year')->willReturn(true);
+
+        $this->forceProperty($subject, 'request', $request->reveal());
+        $this->forceProperty($subject, 'arguments', $arguments->reveal());
+
+        $subject->initializeYearAction();
+        $arguments->checkProphecyMethodsPredictions();
+    }
+
+    /**
+     * @test
+     */
+    public function addsYearToView(): void
+    {
+        $subject = new CalendarController();
+
+        $year = $this->prophesize(Year::class);
+        $view = $this->prophesize(ViewInterface::class);
+        $view->assignMultiple([
+            'year' => $year->reveal(),
+        ])->shouldBeCalled();
+
+        $this->forceProperty($subject, 'view', $view->reveal());
+
+        $subject->yearAction($year->reveal());
+        $view->checkProphecyMethodsPredictions();
+    }
 
     /**
      * @test
