@@ -34,6 +34,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "7.3"
+
       - name: Keep composer at 1.x
         run: sudo composer selfupdate --1
 
@@ -60,6 +65,11 @@ jobs:
     needs: [check-composer]
     steps:
       - uses: actions/checkout@v2
+
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "7.3"
 
       - name: Install xmllint
         run: sudo apt-get install libxml2-utils
@@ -98,6 +108,11 @@ jobs:
       - xml-linting
     steps:
       - uses: actions/checkout@v2
+
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "7.3"
 
       - name: Keep composer at 1.x
         run: sudo composer selfupdate --1
