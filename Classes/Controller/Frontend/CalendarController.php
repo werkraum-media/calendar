@@ -21,6 +21,7 @@ namespace WerkraumMedia\Calendar\Controller\Frontend;
  * 02110-1301, USA.
  */
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
@@ -28,6 +29,7 @@ use WerkraumMedia\Calendar\Domain\Model\Day;
 use WerkraumMedia\Calendar\Domain\Model\Month;
 use WerkraumMedia\Calendar\Domain\Model\Week;
 use WerkraumMedia\Calendar\Domain\Model\Year;
+use WerkraumMedia\Calendar\Events\AssignTemplateVariables;
 
 class CalendarController extends ActionController
 {
@@ -51,7 +53,7 @@ class CalendarController extends ActionController
      */
     public function yearAction(Year $year)
     {
-        $this->view->assignMultiple([
+        $this->assignVariables([
             'year' => $year,
         ]);
     }
@@ -77,7 +79,7 @@ class CalendarController extends ActionController
      */
     public function monthAction(Month $month)
     {
-        $this->view->assignMultiple([
+        $this->assignVariables([
             'month' => $month,
         ]);
     }
@@ -103,7 +105,7 @@ class CalendarController extends ActionController
      */
     public function weekAction(Week $week)
     {
-        $this->view->assignMultiple([
+        $this->assignVariables([
             'week' => $week,
         ]);
     }
@@ -134,8 +136,15 @@ class CalendarController extends ActionController
      */
     public function dayAction(Day $day)
     {
-        $this->view->assignMultiple([
+        $this->assignVariables([
             'day' => $day,
         ]);
+    }
+
+    private function assignVariables(array $variables): void
+    {
+        $event = GeneralUtility::makeInstance(AssignTemplateVariables::class, $variables);
+        $this->eventDispatcher->dispatch($event);
+        $this->view->assignMultiple($event->getVariables());
     }
 }
