@@ -25,7 +25,10 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
+use WerkraumMedia\Calendar\Domain\Model\Context;
+use WerkraumMedia\Calendar\Domain\Model\ContextSpecificFactory;
 use WerkraumMedia\Calendar\Domain\Model\Day;
+use WerkraumMedia\Calendar\Domain\Model\ForeignDataFactory;
 use WerkraumMedia\Calendar\Domain\Model\Month;
 use WerkraumMedia\Calendar\Domain\Model\Week;
 use WerkraumMedia\Calendar\Domain\Model\Year;
@@ -33,6 +36,26 @@ use WerkraumMedia\Calendar\Events\AssignTemplateVariables;
 
 class CalendarController extends ActionController
 {
+    /**
+     * @var ForeignDataFactory
+     */
+    private $foreignDataFactory;
+
+    public function __construct(
+        ForeignDataFactory $foreignDataFactory
+    ) {
+        $this->foreignDataFactory = $foreignDataFactory;
+    }
+
+    public function initializeAction()
+    {
+        if ($this->foreignDataFactory instanceof ContextSpecificFactory) {
+            $this->foreignDataFactory->setContext(
+                Context::createFromContentObjectRenderer($this->configurationManager->getContentObject())
+            );
+        }
+    }
+
     public function initializeYearAction()
     {
         if ($this->request->hasArgument('year') === false) {
