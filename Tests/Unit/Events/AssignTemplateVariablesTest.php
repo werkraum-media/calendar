@@ -35,10 +35,26 @@ class AssignTemplateVariablesTest extends TestCase
     public function canBeCreated(): void
     {
         $subject = new AssignTemplateVariables(
-            []
+            [],
+            ''
         );
 
         self::assertInstanceOf(AssignTemplateVariables::class, $subject);
+    }
+
+    /**
+     * @test
+     */
+    public function returnsPluginName(): void
+    {
+        $subject = new AssignTemplateVariables(
+            [],
+            'Example'
+        );
+
+        $result = $subject->getPluginName();
+
+        self::assertSame('Example', $result);
     }
 
     /**
@@ -49,7 +65,8 @@ class AssignTemplateVariablesTest extends TestCase
         $subject = new AssignTemplateVariables(
             [
                 'variable1' => 'value1',
-            ]
+            ],
+            ''
         );
 
         $result = $subject->getVariables();
@@ -67,7 +84,8 @@ class AssignTemplateVariablesTest extends TestCase
         $subject = new AssignTemplateVariables(
             [
                 'variable1' => 'value1',
-            ]
+            ],
+            ''
         );
 
         $subject->setVariables([

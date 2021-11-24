@@ -176,7 +176,11 @@ class CalendarController extends ActionController
 
     private function assignVariables(array $variables): void
     {
-        $event = GeneralUtility::makeInstance(AssignTemplateVariables::class, $variables);
+        $event = GeneralUtility::makeInstance(
+            AssignTemplateVariables::class,
+            $variables,
+            $this->request->getPluginName()
+        );
         $this->eventDispatcher->dispatch($event);
         $this->view->assignMultiple($event->getVariables());
     }

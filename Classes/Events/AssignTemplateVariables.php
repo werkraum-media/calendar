@@ -28,10 +28,22 @@ final class AssignTemplateVariables
      */
     private $variables;
 
+    /**
+     * @var string
+     */
+    private $pluginName;
+
     public function __construct(
-        array $variables
+        array $variables,
+        string $pluginName
     ) {
         $this->variables = $variables;
+        $this->pluginName = $pluginName;
+    }
+
+    public function getPluginName(): string
+    {
+        return $this->pluginName;
     }
 
     public function getVariables(): array
