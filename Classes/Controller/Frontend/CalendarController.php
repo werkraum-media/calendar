@@ -114,7 +114,9 @@ class CalendarController extends ActionController
     {
         if ($this->request->hasArgument('day') === false) {
             $this->request->setArguments([
-                'day' => new \DateTimeImmutable(),
+                'day' => [
+                    'day' => date('Y-m-d'),
+                ],
             ]);
         }
 

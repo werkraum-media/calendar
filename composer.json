@@ -24,7 +24,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "WerkraumMedia\\Calendar\\Tests\\": "Tests/"
+            "WerkraumMedia\\Calendar\\Tests\\": "Tests/",
+            "WerkraumMedia\\CalendarExample\\": "Tests/Fixtures/calendar_example/Classes/"
         }
     },
     "require-dev": {
@@ -32,7 +33,9 @@
         "maglnet/composer-require-checker": "^2.1",
         "phpspec/prophecy-phpunit": "^2.0",
         "phpunit/phpunit": "^9.5",
-        "symplify/easy-coding-standard": "^9.2"
+        "symplify/easy-coding-standard": "^9.2",
+        "typo3/cms-fluid-styled-content": "^10.4",
+        "typo3/testing-framework": "^6.6"
     },
     "extra": {
         "typo3/cms": {
@@ -40,5 +43,11 @@
             "extension-key": "calendar",
             "web-dir": ".Build/web"
         }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "@php -r 'is_dir($extFolder = __DIR__ . \"/.Build/web/typo3conf/ext/\") || mkdir($extFolder, 0777, true);'",
+            "@php -r 'file_exists($extFolder = __DIR__ . \"/.Build/web/typo3conf/ext/calendar\") || symlink(__DIR__, $extFolder);'"
+        ]
     }
 }

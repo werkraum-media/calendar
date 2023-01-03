@@ -1,0 +1,12 @@
+plugin.tx_calendar_example {
+    view {
+        templateRootPaths {
+            10 = EXT:calendar_example/Resources/Private/Templates/
+        }
+    }
+}
+
+page = PAGE
+page {
+    10 =< tt_content.calendar_example.20
+}
