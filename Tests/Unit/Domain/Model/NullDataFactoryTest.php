@@ -22,7 +22,6 @@ namespace WerkraumMedia\Calendar\Tests\Unit\Domain\Model;
  */
 
 use PHPUnit\Framework\TestCase;
-use Prophecy\PhpUnit\ProphecyTrait;
 use WerkraumMedia\Calendar\Domain\Model\Day;
 use WerkraumMedia\Calendar\Domain\Model\NullDataFactory;
 
@@ -31,15 +30,13 @@ use WerkraumMedia\Calendar\Domain\Model\NullDataFactory;
  */
 class NullDataFactoryTest extends TestCase
 {
-    use ProphecyTrait;
-
     /**
      * @test
      */
     public function returnsNull(): void
     {
         $subject = new NullDataFactory();
-        $day = $this->prophesize(Day::class);
-        self::assertNull($subject->getData($day->reveal()));
+        $day = $this->createStub(Day::class);
+        self::assertNull($subject->getData($day));
     }
 }

@@ -24,7 +24,6 @@ declare(strict_types=1);
 namespace WerkraumMedia\Calendar\Tests\Unit\Domain\Model;
 
 use PHPUnit\Framework\TestCase;
-use Prophecy\PhpUnit\ProphecyTrait;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use WerkraumMedia\Calendar\Domain\Model\Context;
 
@@ -33,15 +32,17 @@ use WerkraumMedia\Calendar\Domain\Model\Context;
  */
 class ContextTest extends TestCase
 {
-    use ProphecyTrait;
-
     /**
      * @test
      */
     public function canNotBeCreatedViaNew(): void
     {
         $this->expectError();
-        $this->expectErrorMessage('Call to private WerkraumMedia\Calendar\Domain\Model\Context::__construct() from context \'WerkraumMedia\Calendar\Tests\Unit\Domain\Model\ContextTest\'');
+        if (version_compare(PHP_VERSION, '8.0', '>=')) {
+            $this->expectErrorMessage('Call to private WerkraumMedia\Calendar\Domain\Model\Context::__construct() from scope WerkraumMedia\Calendar\Tests\Unit\Domain\Model\ContextTest');
+        } else {
+            $this->expectErrorMessage('Call to private WerkraumMedia\Calendar\Domain\Model\Context::__construct() from context \'WerkraumMedia\Calendar\Tests\Unit\Domain\Model\ContextTest\'');
+        }
         $subject = new Context();
     }
 
@@ -50,8 +51,8 @@ class ContextTest extends TestCase
      */
     public function canBeCreatedFromContentObjectRenderer(): void
     {
-        $contentObjectRenderer = $this->prophesize(ContentObjectRenderer::class);
-        $subject = Context::createFromContentObjectRenderer($contentObjectRenderer->reveal());
+        $contentObjectRenderer = $this->createStub(ContentObjectRenderer::class);
+        $subject = Context::createFromContentObjectRenderer($contentObjectRenderer);
 
         self::assertInstanceOf(Context::class, $subject);
     }
@@ -61,9 +62,9 @@ class ContextTest extends TestCase
      */
     public function providesTableNameInheritedFromContentObjectRenderer(): void
     {
-        $contentObjectRenderer = $this->prophesize(ContentObjectRenderer::class);
-        $contentObjectRenderer->getCurrentTable()->willReturn('tx_calendar_example_table');
-        $subject = Context::createFromContentObjectRenderer($contentObjectRenderer->reveal());
+        $contentObjectRenderer = $this->createStub(ContentObjectRenderer::class);
+        $contentObjectRenderer->method('getCurrentTable')->willReturn('tx_calendar_example_table');
+        $subject = Context::createFromContentObjectRenderer($contentObjectRenderer);
 
         self::assertSame('tx_calendar_example_table', $subject->getTableName());
     }
@@ -73,12 +74,12 @@ class ContextTest extends TestCase
      */
     public function providesDatabaseRowInheritedFromContentObjectRenderer(): void
     {
-        $contentObjectRenderer = $this->prophesize(ContentObjectRenderer::class);
+        $contentObjectRenderer = $this->createStub(ContentObjectRenderer::class);
         $contentObjectRenderer->data = [
             'uid' => 10,
             'pid' => 1,
         ];
-        $subject = Context::createFromContentObjectRenderer($contentObjectRenderer->reveal());
+        $subject = Context::createFromContentObjectRenderer($contentObjectRenderer);
 
         self::assertSame([
             'uid' => 10,

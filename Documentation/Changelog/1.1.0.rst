@@ -9,6 +9,8 @@ Nothing
 Features
 --------
 
+* Add compatibility for TYPO3 v11 and PHP 8.0, 8.1, 8.2.
+
 * Add context to foreign data factory.
   The factory can optionally implement the ``WerkraumMedia\Calendar\Domain\Model\ContextSpecificFactory`` interface.
   That way it will receive a bit of context to react on the current situation.
