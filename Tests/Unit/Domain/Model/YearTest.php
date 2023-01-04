@@ -22,7 +22,6 @@ namespace WerkraumMedia\Calendar\Tests\Unit\Domain\Model;
  */
 
 use PHPUnit\Framework\TestCase;
-use Prophecy\PhpUnit\ProphecyTrait;
 use WerkraumMedia\Calendar\Domain\Model\Month;
 use WerkraumMedia\Calendar\Domain\Model\Year;
 use WerkraumMedia\Calendar\Tests\ForcePropertyTrait;
@@ -33,7 +32,6 @@ use WerkraumMedia\Calendar\Tests\ForcePropertyTrait;
  */
 class YearTest extends TestCase
 {
-    use ProphecyTrait;
     use ForcePropertyTrait;
 
     /**
@@ -133,9 +131,9 @@ class YearTest extends TestCase
     {
         $subject = new Year(2020);
 
-        $month = $this->prophesize(Month::class);
-        $month->isActive()->willReturn(false);
-        $months = [$month->reveal()];
+        $month = $this->createStub(Month::class);
+        $month->method('isActive')->willReturn(false);
+        $months = [$month];
         $this->forceProperty($subject, 'months', $months);
 
         self::assertFalse($subject->isActive());
@@ -148,9 +146,9 @@ class YearTest extends TestCase
     {
         $subject = new Year(2020);
 
-        $month = $this->prophesize(Month::class);
-        $month->isActive()->willReturn(true);
-        $months = [$month->reveal()];
+        $month = $this->createStub(Month::class);
+        $month->method('isActive')->willReturn(true);
+        $months = [$month];
         $this->forceProperty($subject, 'months', $months);
 
         self::assertTrue($subject->isActive());

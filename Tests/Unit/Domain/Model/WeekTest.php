@@ -22,7 +22,6 @@ namespace WerkraumMedia\Calendar\Tests\Unit\Domain\Model;
  */
 
 use PHPUnit\Framework\TestCase;
-use Prophecy\PhpUnit\ProphecyTrait;
 use WerkraumMedia\Calendar\Domain\Model\Day;
 use WerkraumMedia\Calendar\Domain\Model\Week;
 use WerkraumMedia\Calendar\Tests\ForcePropertyTrait;
@@ -33,7 +32,6 @@ use WerkraumMedia\Calendar\Tests\ForcePropertyTrait;
  */
 class WeekTest extends TestCase
 {
-    use ProphecyTrait;
     use ForcePropertyTrait;
 
     /**
@@ -208,9 +206,9 @@ class WeekTest extends TestCase
     {
         $subject = new Week(02, 2018);
 
-        $day = $this->prophesize(Day::class);
-        $day->isActive()->willReturn(false);
-        $days = [$day->reveal()];
+        $day = $this->createStub(Day::class);
+        $day->method('isActive')->willReturn(false);
+        $days = [$day];
         $this->forceProperty($subject, 'days', $days);
 
         self::assertFalse($subject->isActive());
@@ -223,11 +221,11 @@ class WeekTest extends TestCase
     {
         $subject = new Week(02, 2018);
 
-        $day = $this->prophesize(Day::class);
-        $day->isActive()->willReturn(true);
-        $day2 = $this->prophesize(Day::class);
-        $day2->isActive()->willReturn(false);
-        $days = [$day->reveal(), $day2->reveal()];
+        $day = $this->createStub(Day::class);
+        $day->method('isActive')->willReturn(true);
+        $day2 = $this->createStub(Day::class);
+        $day2->method('isActive')->willReturn(false);
+        $days = [$day, $day2];
         $this->forceProperty($subject, 'days', $days);
 
         self::assertTrue($subject->isActive());

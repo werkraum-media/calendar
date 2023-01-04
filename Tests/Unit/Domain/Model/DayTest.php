@@ -22,8 +22,6 @@ namespace WerkraumMedia\Calendar\Tests\Unit\Domain\Model;
  */
 
 use PHPUnit\Framework\TestCase;
-use Prophecy\Argument;
-use Prophecy\PhpUnit\ProphecyTrait;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use WerkraumMedia\Calendar\Domain\Model\Day;
@@ -38,7 +36,6 @@ use WerkraumMedia\Calendar\Tests\ForcePropertyTrait;
  */
 class DayTest extends TestCase
 {
-    use ProphecyTrait;
     use ForcePropertyTrait;
 
     public function tearDown(): void
@@ -127,11 +124,11 @@ class DayTest extends TestCase
     {
         $subject = new Day(new \DateTime('2020-10-19'));
 
-        $foreignData = $this->prophesize(IsDayActive::class);
-        $foreignData->isActive(Argument::any())->willReturn(false);
+        $foreignData = $this->createStub(IsDayActive::class);
+        $foreignData->method('isActive')->willReturn(false);
 
         $this->forceProperty($subject, 'initialized', true);
-        $this->forceProperty($subject, 'foreignData', $foreignData->reveal());
+        $this->forceProperty($subject, 'foreignData', $foreignData);
 
         self::assertFalse($subject->isActive());
     }
@@ -143,13 +140,13 @@ class DayTest extends TestCase
     {
         $subject = new Day(new \DateTime('2020-10-19'));
 
-        $foreignData = $this->prophesize(IsDayActive::class);
-        $foreignData->isActive(Argument::any())->willReturn(true);
+        $foreignData = $this->createStub(IsDayActive::class);
+        $foreignData->method('isActive')->willReturn(true);
 
-        $factory = $this->prophesize(ForeignDataFactory::class);
-        $factory->getData($subject)->willReturn($foreignData->reveal());
+        $factory = $this->createStub(ForeignDataFactory::class);
+        $factory->method('getData')->willReturn($foreignData);
 
-        GeneralUtility::addInstance(ForeignDataFactory::class, $factory->reveal());
+        GeneralUtility::addInstance(ForeignDataFactory::class, $factory);
 
         self::assertTrue($subject->isActive());
     }
