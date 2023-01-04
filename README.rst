@@ -3,12 +3,20 @@ TYPO3 Extension: calendar
 
 Provides:
 
-* Data (classes) for Month, Week and Day.
+* Data (classes) for Year, Month, Week and Day.
 
-* Controller with action to view Month, Week and Day.
+* Controller with action to view Year, Month, Week and Day.
 
 Each day can have foreign data created by a factory.
 That way extensions or TYPO3 instances can add further data to each day.
+
+Alter Variables
+---------------
+
+The controller also has an event to alter assigned variables for each action.
+
+Check out ``Tests/Fixtures/calendar_example/`` as an example on how to provide
+necessary custom setup.
 
 Configuration
 -------------
