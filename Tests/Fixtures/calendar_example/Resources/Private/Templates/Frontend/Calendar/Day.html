@@ -5,6 +5,9 @@
     <h2>{day.dateTimeInstance -> f:format.date(format: 'd.m.Y')}</h2>
 
     {day.foreignData.exampleKey}
+    Table: {day.foreignData.context.tableName}
+    Title: {day.foreignData.context.databaseRow.title}
 
     {customVariable}
+    PluginName: {pluginName}
 </html>

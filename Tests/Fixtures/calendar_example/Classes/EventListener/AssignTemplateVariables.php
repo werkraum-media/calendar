@@ -30,6 +30,7 @@ class AssignTemplateVariables
     public function __invoke(AssignTemplateVariablesEvent $event): void
     {
         $event->setVariables(array_merge($event->getVariables(), [
+            'pluginName' => $event->getPluginName(),
             'customVariable' => 'modifiedVariable',
         ]));
     }

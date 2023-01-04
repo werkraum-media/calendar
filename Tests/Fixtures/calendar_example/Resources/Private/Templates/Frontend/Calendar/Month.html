@@ -7,8 +7,11 @@
         <f:for each="{week.days}" as="day">
             {day.dateTimeInstance -> f:format.date(format: 'd')}
             {day.foreignData.exampleKey}
+            Table: {day.foreignData.context.tableName}
+            Title: {day.foreignData.context.databaseRow.title}
         </f:for>
     </f:for>
 
     {customVariable}
+    PluginName: {pluginName}
 </html>

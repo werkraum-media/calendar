@@ -188,10 +188,8 @@ class CalendarController extends ActionController
     /**
      * Checks for TypoScript and transforms TypoScript into expected value.
      * Allows to define defaults other than "now" for arguments.
-     *
-     * @return int|\DateTimeImmutable
      */
-    private function getDefaultArgumentValue(string $argumentName)
+    private function getDefaultArgumentValue(string $argumentName): string
     {
         $arguments = $this->typoScriptService->convertPlainArrayToTypoScriptArray(
             $this->settings['arguments'] ?? []
@@ -210,10 +208,6 @@ class CalendarController extends ActionController
             $fallbackValues[$argumentName]
         );
 
-        if ($argumentName === 'day') {
-            return new \DateTimeImmutable($value);
-        }
-
-        return (int) $value;
+        return $value;
     }
 }
