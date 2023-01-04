@@ -23,15 +23,31 @@ declare(strict_types=1);
 
 namespace WerkraumMedia\CalendarExample\Domain;
 
+use WerkraumMedia\Calendar\Domain\Model\Context;
+use WerkraumMedia\Calendar\Domain\Model\ContextSpecificFactory;
 use WerkraumMedia\Calendar\Domain\Model\Day;
 use WerkraumMedia\Calendar\Domain\Model\ForeignDataFactory;
 
-class ExampleDataFactory implements ForeignDataFactory
+class ExampleDataFactory implements ForeignDataFactory, ContextSpecificFactory
 {
+    /**
+     * @var Context
+     */
+    private $context;
+
+    public function setContext(Context $context): void
+    {
+        $this->context = $context;
+    }
+
     public function getData(Day $day)
     {
         return [
             'exampleKey' => 'exampleValue',
+            'context' => [
+                'tableName' => $this->context->getTableName(),
+                'databaseRow' => $this->context->getDatabaseRow(),
+            ],
         ];
     }
 }

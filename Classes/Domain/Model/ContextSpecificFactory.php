@@ -1,9 +1,9 @@
 <?php
 
-declare(strict_types=1);
+namespace WerkraumMedia\Calendar\Domain\Model;
 
 /*
- * Copyright (C) 2023 Daniel Siepmann <coding@daniel-siepmann.de>
+ * Copyright (C) 2020 Daniel Siepmann <coding@daniel-siepmann.de>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -21,17 +21,11 @@ declare(strict_types=1);
  * 02110-1301, USA.
  */
 
-namespace WerkraumMedia\CalendarExample\EventListener;
-
-use WerkraumMedia\Calendar\Events\AssignTemplateVariables as AssignTemplateVariablesEvent;
-
-class AssignTemplateVariables
+interface ContextSpecificFactory
 {
-    public function __invoke(AssignTemplateVariablesEvent $event): void
-    {
-        $event->setVariables(array_merge($event->getVariables(), [
-            'pluginName' => $event->getPluginName(),
-            'customVariable' => 'modifiedVariable',
-        ]));
-    }
+    /**
+     * Might be called prior ot getData().
+     * Allows getData() to know the current context and make decisions.
+     */
+    public function setContext(Context $context): void;
 }

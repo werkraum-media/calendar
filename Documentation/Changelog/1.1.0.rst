@@ -1,0 +1,58 @@
+1.1.0
+=====
+
+Breaking
+--------
+
+Nothing
+
+Features
+--------
+
+* Add context to foreign data factory.
+  The factory can optionally implement the ``WerkraumMedia\Calendar\Domain\Model\ContextSpecificFactory`` interface.
+  That way it will receive a bit of context to react on the current situation.
+
+* Add Extbase Settings to configure default arguments for each action:
+
+  .. code-block:: typoscript
+
+     plugin.tx_calendar_example {
+         settings {
+             arguments {
+                 year = 1988
+                 month = 11
+                 week = 12
+                 day = 1988-11-03
+             }
+         }
+     }
+
+  StdWrap is applied, so more complex setups are possible, e.g.:
+
+  .. code-block:: typoscript
+
+     arguments {
+         year {
+             strtotime = midnight first day of -1 year
+             strftime = %Y
+         }
+     }
+
+* The current plugin name is available to the ``AssignTemplateVariables`` event.
+
+Fixes
+-----
+
+Nothing
+
+Tasks
+-----
+
+Nothing
+
+Deprecation
+-----------
+
+Nothing
+

@@ -1,6 +1,6 @@
 <?php
 
-namespace WerkraumMedia\Calendar\Events;
+declare(strict_types=1);
 
 /*
  * Copyright (C) 2021 Daniel Siepmann <coding@daniel-siepmann.de>
@@ -21,38 +21,44 @@ namespace WerkraumMedia\Calendar\Events;
  * 02110-1301, USA.
  */
 
-final class AssignTemplateVariables
-{
-    /**
-     * @var array
-     */
-    private $variables;
+namespace WerkraumMedia\Calendar\Domain\Model;
 
+use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
+
+class Context
+{
     /**
      * @var string
      */
-    private $pluginName;
+    protected $tableName = '';
 
-    public function __construct(
-        array $variables,
-        string $pluginName
-    ) {
-        $this->variables = $variables;
-        $this->pluginName = $pluginName;
+    /**
+     * @var array
+     */
+    protected $databaseRow = [];
+
+    private function __construct()
+    {
     }
 
-    public function getPluginName(): string
-    {
-        return $this->pluginName;
+    public static function createFromContentObjectRenderer(
+        ContentObjectRenderer $contentObjectRenderer
+    ): self {
+        $instance = new self();
+
+        $instance->tableName = $contentObjectRenderer->getCurrentTable();
+        $instance->databaseRow = $contentObjectRenderer->data;
+
+        return $instance;
     }
 
-    public function getVariables(): array
+    public function getTableName(): string
     {
-        return $this->variables;
+        return $this->tableName;
     }
 
-    public function setVariables(array $variables): void
+    public function getDatabaseRow(): array
     {
-        $this->variables = $variables;
+        return $this->databaseRow;
     }
 }

@@ -85,5 +85,6 @@ class Day
 
         $this->foreignData = GeneralUtility::makeInstance(ForeignDataFactory::class)
             ->getData($this);
+        $this->initialized = true;
     }
 }

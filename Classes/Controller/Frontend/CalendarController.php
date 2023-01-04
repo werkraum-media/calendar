@@ -21,11 +21,15 @@ namespace WerkraumMedia\Calendar\Controller\Frontend;
  * 02110-1301, USA.
  */
 
+use TYPO3\CMS\Core\TypoScript\TypoScriptService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
+use WerkraumMedia\Calendar\Domain\Model\Context;
+use WerkraumMedia\Calendar\Domain\Model\ContextSpecificFactory;
 use WerkraumMedia\Calendar\Domain\Model\Day;
+use WerkraumMedia\Calendar\Domain\Model\ForeignDataFactory;
 use WerkraumMedia\Calendar\Domain\Model\Month;
 use WerkraumMedia\Calendar\Domain\Model\Week;
 use WerkraumMedia\Calendar\Domain\Model\Year;
@@ -33,12 +37,39 @@ use WerkraumMedia\Calendar\Events\AssignTemplateVariables;
 
 class CalendarController extends ActionController
 {
+    /**
+     * @var ForeignDataFactory
+     */
+    private $foreignDataFactory;
+
+    /**
+     * @var TypoScriptService
+     */
+    private $typoScriptService;
+
+    public function __construct(
+        ForeignDataFactory $foreignDataFactory,
+        TypoScriptService $typoScriptService
+    ) {
+        $this->foreignDataFactory = $foreignDataFactory;
+        $this->typoScriptService = $typoScriptService;
+    }
+
+    public function initializeAction()
+    {
+        if ($this->foreignDataFactory instanceof ContextSpecificFactory) {
+            $this->foreignDataFactory->setContext(
+                Context::createFromContentObjectRenderer($this->configurationManager->getContentObject())
+            );
+        }
+    }
+
     public function initializeYearAction()
     {
         if ($this->request->hasArgument('year') === false) {
             $this->request->setArguments([
                 'year' => [
-                    'year' => date('Y'),
+                    'year' => $this->getDefaultArgumentValue('year'),
                 ],
             ]);
         }
@@ -63,8 +94,8 @@ class CalendarController extends ActionController
         if ($this->request->hasArgument('month') === false) {
             $this->request->setArguments([
                 'month' => [
-                    'month' => date('m'),
-                    'year' => date('Y'),
+                    'month' => $this->getDefaultArgumentValue('month'),
+                    'year' => $this->getDefaultArgumentValue('year'),
                 ],
             ]);
         }
@@ -89,8 +120,8 @@ class CalendarController extends ActionController
         if ($this->request->hasArgument('week') === false) {
             $this->request->setArguments([
                 'week' => [
-                    'week' => date('W'),
-                    'year' => date('Y'),
+                    'week' => $this->getDefaultArgumentValue('week'),
+                    'year' => $this->getDefaultArgumentValue('year'),
                 ],
             ]);
         }
@@ -115,7 +146,7 @@ class CalendarController extends ActionController
         if ($this->request->hasArgument('day') === false) {
             $this->request->setArguments([
                 'day' => [
-                    'day' => date('Y-m-d'),
+                    'day' => $this->getDefaultArgumentValue('day'),
                 ],
             ]);
         }
@@ -145,8 +176,38 @@ class CalendarController extends ActionController
 
     private function assignVariables(array $variables): void
     {
-        $event = GeneralUtility::makeInstance(AssignTemplateVariables::class, $variables);
+        $event = GeneralUtility::makeInstance(
+            AssignTemplateVariables::class,
+            $variables,
+            $this->request->getPluginName()
+        );
         $this->eventDispatcher->dispatch($event);
         $this->view->assignMultiple($event->getVariables());
+    }
+
+    /**
+     * Checks for TypoScript and transforms TypoScript into expected value.
+     * Allows to define defaults other than "now" for arguments.
+     */
+    private function getDefaultArgumentValue(string $argumentName): string
+    {
+        $arguments = $this->typoScriptService->convertPlainArrayToTypoScriptArray(
+            $this->settings['arguments'] ?? []
+        );
+
+        $fallbackValues = [
+            'year' => date('Y'),
+            'month' => date('m'),
+            'week' => date('W'),
+            'day' => date('Y-m-d'),
+        ];
+
+        $value = $this->configurationManager->getContentObject()->stdWrapValue(
+            $argumentName,
+            $arguments,
+            $fallbackValues[$argumentName]
+        );
+
+        return $value;
     }
 }
