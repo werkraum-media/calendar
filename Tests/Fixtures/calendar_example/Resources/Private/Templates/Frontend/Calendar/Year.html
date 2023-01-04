@@ -1,0 +1,16 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    data-namespace-typo3-fluid="true">
+
+    <h2>{year.dateTimeInstance -> f:format.date(format: 'Y')}</h2>
+
+    <f:for each="{year.months}" as="month">
+        <f:for each="{month.weeks}" as="week">
+            <f:for each="{week.days}" as="day">
+                {day.dateTimeInstance -> f:format.date(format: 'd')}
+                {day.foreignData.exampleKey}
+            </f:for>
+        </f:for>
+    </f:for>
+
+    {customVariable}
+</html>

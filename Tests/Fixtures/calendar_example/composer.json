@@ -1,0 +1,21 @@
+{
+    "name": "werkraummedia/calendar_example",
+    "description": "Add calendar data",
+    "type": "typo3-cms-extension",
+    "license": "GPL-2.0-or-later",
+    "autoload": {
+        "psr-4": {
+            "WerkraumMedia\\CalendarExample\\": "Classes/"
+        }
+    },
+    "require": {
+        "typo3/cms-core": "*",
+        "typo3/cms-fluid-styled-content": "*",
+        "werkraummedia/calendar": "*"
+    },
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "calendar_example"
+        }
+    }
+}

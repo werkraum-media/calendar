@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dataset>
+    <pages>
+        <uid>1</uid>
+        <pid>0</pid>
+        <doktype>1</doktype>
+        <is_siteroot>1</is_siteroot>
+        <slug>/</slug>
+        <title>Page Title</title>
+    </pages>
+    <sys_template>
+        <uid>1</uid>
+        <pid>1</pid>
+        <root>1</root>
+        <clear>3</clear>
+        <constants>databasePlatform = mysql</constants>
+        <config><![CDATA[
+            <INCLUDE_TYPOSCRIPT: source="FILE:EXT:calendar_example/Configuration/TypoScript/Setup.typoscript">
+            <INCLUDE_TYPOSCRIPT: source="FILE:EXT:fluid_styled_content/Configuration/TypoScript/setup.typoscript">
+        ]]></config>
+    </sys_template>
+</dataset>

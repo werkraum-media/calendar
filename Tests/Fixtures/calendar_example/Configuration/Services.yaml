@@ -1,0 +1,17 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  WerkraumMedia\CalendarExample\:
+    resource: '../Classes/*'
+
+  WerkraumMedia\Calendar\Domain\Model\ForeignDataFactory:
+    class: 'WerkraumMedia\CalendarExample\Domain\ExampleDataFactory'
+    public: true
+
+  WerkraumMedia\CalendarExample\EventListener\AssignTemplateVariables:
+    tags:
+      - name: 'event.listener'
+        event: 'WerkraumMedia\Calendar\Events\AssignTemplateVariables'
