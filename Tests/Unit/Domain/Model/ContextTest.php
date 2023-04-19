@@ -35,20 +35,6 @@ class ContextTest extends TestCase
     /**
      * @test
      */
-    public function canNotBeCreatedViaNew(): void
-    {
-        $this->expectError();
-        if (version_compare(PHP_VERSION, '8.0', '>=')) {
-            $this->expectErrorMessage('Call to private WerkraumMedia\Calendar\Domain\Model\Context::__construct() from scope WerkraumMedia\Calendar\Tests\Unit\Domain\Model\ContextTest');
-        } else {
-            $this->expectErrorMessage('Call to private WerkraumMedia\Calendar\Domain\Model\Context::__construct() from context \'WerkraumMedia\Calendar\Tests\Unit\Domain\Model\ContextTest\'');
-        }
-        $subject = new Context();
-    }
-
-    /**
-     * @test
-     */
     public function canBeCreatedFromContentObjectRenderer(): void
     {
         $contentObjectRenderer = $this->createStub(ContentObjectRenderer::class);

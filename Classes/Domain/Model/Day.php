@@ -44,7 +44,6 @@ class Day
     public function __construct(
         \DateTime $day
     ) {
-        $this->periods = new ObjectStorage();
         $this->day = \DateTimeImmutable::createFromMutable($day)->modify('midnight');
     }
 
