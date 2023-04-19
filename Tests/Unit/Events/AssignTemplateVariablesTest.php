@@ -21,17 +21,13 @@ namespace WerkraumMedia\Calendar\Tests\Unit\Events;
  * 02110-1301, USA.
  */
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use WerkraumMedia\Calendar\Events\AssignTemplateVariables;
 
-/**
- * @covers WerkraumMedia\Calendar\Events\AssignTemplateVariables
- */
 class AssignTemplateVariablesTest extends TestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function canBeCreated(): void
     {
         $subject = new AssignTemplateVariables(
@@ -42,9 +38,7 @@ class AssignTemplateVariablesTest extends TestCase
         self::assertInstanceOf(AssignTemplateVariables::class, $subject);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsPluginName(): void
     {
         $subject = new AssignTemplateVariables(
@@ -57,9 +51,7 @@ class AssignTemplateVariablesTest extends TestCase
         self::assertSame('Example', $result);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsVariables(): void
     {
         $subject = new AssignTemplateVariables(
@@ -76,9 +68,7 @@ class AssignTemplateVariablesTest extends TestCase
         ], $result);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function newVariablesOverwriteExistingVariables(): void
     {
         $subject = new AssignTemplateVariables(

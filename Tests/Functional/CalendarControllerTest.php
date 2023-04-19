@@ -23,30 +23,32 @@ declare(strict_types=1);
 
 namespace WerkraumMedia\Calendar\Tests\Functional;
 
+use Codappix\Typo3PhpDatasets\TestingFramework;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\TestDox;
+use TYPO3\CMS\Core\Localization\DateFormatter;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
-use WerkraumMedia\Calendar\Controller\Frontend\CalendarController;
 
-/**
- * @coversNothing
- * @testdox Calendar controller renders with
- */
+#[TestDox('Calendar controller renders with')]
 class CalendarControllerTest extends FunctionalTestCase
 {
-    protected $coreExtensionsToLoad = [
+    use TestingFramework;
+
+    protected array $coreExtensionsToLoad = [
         'fluid_styled_content',
     ];
 
-    protected $testExtensionsToLoad = [
+    protected array $testExtensionsToLoad = [
         'typo3conf/ext/calendar',
         'typo3conf/ext/calendar/Tests/Fixtures/calendar_example',
     ];
 
-    protected $pathsToLinkInTestInstance = [
+    protected array $pathsToLinkInTestInstance = [
         'typo3conf/ext/calendar/Tests/Fixtures/Sites' => 'typo3conf/sites',
     ];
 
-    protected $configurationToUseInTestInstance = [
+    protected array $configurationToUseInTestInstance = [
         'FE' => [
             'cacheHash' => [
                 'excludedParameters' => [
@@ -61,45 +63,39 @@ class CalendarControllerTest extends FunctionalTestCase
     {
         parent::setUp();
 
-        $this->importDataSet(__DIR__ . '/../Fixtures/BasicDatabase.xml');
+        $this->importPHPDataSet(__DIR__ . '/../Fixtures/BasicDatabase.php');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function modifiedVariablesForCurrentDay(): void
     {
         $request = new InternalRequest();
         $request = $request->withPageId(1);
-        $result = $this->executeFrontendRequest($request);
+        $result = $this->executeFrontendSubRequest($request);
 
         self::assertSame(200, $result->getStatusCode());
         $html = $result->getBody()->__toString();
         self::assertStringContainsString('modifiedVariable', $html);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function pluginNameForCurrentDay(): void
     {
         $request = new InternalRequest();
         $request = $request->withPageId(1);
-        $result = $this->executeFrontendRequest($request);
+        $result = $this->executeFrontendSubRequest($request);
 
         self::assertSame(200, $result->getStatusCode());
         $html = $result->getBody()->__toString();
         self::assertStringContainsString('PluginName: Example', $html);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function contextForCurrentDay(): void
     {
         $request = new InternalRequest();
         $request = $request->withPageId(1);
-        $result = $this->executeFrontendRequest($request);
+        $result = $this->executeFrontendSubRequest($request);
 
         self::assertSame(200, $result->getStatusCode());
         $html = $result->getBody()->__toString();
@@ -107,14 +103,12 @@ class CalendarControllerTest extends FunctionalTestCase
         self::assertStringContainsString('Title: Page Title', $html);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function customDataForCurrentDay(): void
     {
         $request = new InternalRequest();
         $request = $request->withPageId(1);
-        $result = $this->executeFrontendRequest($request);
+        $result = $this->executeFrontendSubRequest($request);
 
         self::assertSame(200, $result->getStatusCode());
         $html = $result->getBody()->__toString();
@@ -122,75 +116,65 @@ class CalendarControllerTest extends FunctionalTestCase
         self::assertStringContainsString('exampleValue', $html);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function configuredDay(): void
     {
         $request = new InternalRequest();
         $request = $request->withPageId(1);
         $request = $request->withQueryParameter('typoScriptDefaults', '1');
-        $result = $this->executeFrontendRequest($request);
+        $result = $this->executeFrontendSubRequest($request);
 
         self::assertSame(200, $result->getStatusCode());
         $html = $result->getBody()->__toString();
         self::assertStringContainsString('03.11.1988', $html);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function providedDay(): void
     {
         $request = new InternalRequest();
         $request = $request->withPageId(1);
         $request = $request->withQueryParameter('tx_calendar_example[day][day]', '2020-11-03');
-        $result = $this->executeFrontendRequest($request);
+        $result = $this->executeFrontendSubRequest($request);
 
         self::assertSame(200, $result->getStatusCode());
         $html = $result->getBody()->__toString();
         self::assertStringContainsString('03.11.2020', $html);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function modifiedVariablesForCurrentWeek(): void
     {
         $request = new InternalRequest();
         $request = $request->withPageId(1);
         $request = $request->withQueryParameter('tx_calendar_example[action]', 'week');
-        $result = $this->executeFrontendRequest($request);
+        $result = $this->executeFrontendSubRequest($request);
 
         self::assertSame(200, $result->getStatusCode());
         $html = $result->getBody()->__toString();
         self::assertStringContainsString('modifiedVariable', $html);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function pluginNameForCurrentWeek(): void
     {
         $request = new InternalRequest();
         $request = $request->withPageId(1);
         $request = $request->withQueryParameter('tx_calendar_example[action]', 'week');
-        $result = $this->executeFrontendRequest($request);
+        $result = $this->executeFrontendSubRequest($request);
 
         self::assertSame(200, $result->getStatusCode());
         $html = $result->getBody()->__toString();
         self::assertStringContainsString('PluginName: Example', $html);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function contextForCurrentWeek(): void
     {
         $request = new InternalRequest();
         $request = $request->withPageId(1);
         $request = $request->withQueryParameter('tx_calendar_example[action]', 'week');
-        $result = $this->executeFrontendRequest($request);
+        $result = $this->executeFrontendSubRequest($request);
 
         self::assertSame(200, $result->getStatusCode());
         $html = $result->getBody()->__toString();
@@ -198,15 +182,13 @@ class CalendarControllerTest extends FunctionalTestCase
         self::assertStringContainsString('Title: Page Title', $html);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function customDataForCurrentWeek(): void
     {
         $request = new InternalRequest();
         $request = $request->withPageId(1);
         $request = $request->withQueryParameter('tx_calendar_example[action]', 'week');
-        $result = $this->executeFrontendRequest($request);
+        $result = $this->executeFrontendSubRequest($request);
 
         self::assertSame(200, $result->getStatusCode());
         $html = $result->getBody()->__toString();
@@ -214,25 +196,21 @@ class CalendarControllerTest extends FunctionalTestCase
         self::assertStringContainsString('exampleValue', $html);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function configuredWeek(): void
     {
         $request = new InternalRequest();
         $request = $request->withPageId(1);
         $request = $request->withQueryParameter('tx_calendar_example[action]', 'week');
         $request = $request->withQueryParameter('typoScriptDefaults', '1');
-        $result = $this->executeFrontendRequest($request);
+        $result = $this->executeFrontendSubRequest($request);
 
         self::assertSame(200, $result->getStatusCode());
         $html = $result->getBody()->__toString();
         self::assertStringContainsString('12 1988', $html);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function providedWeek(): void
     {
         $request = new InternalRequest();
@@ -240,52 +218,46 @@ class CalendarControllerTest extends FunctionalTestCase
         $request = $request->withQueryParameter('tx_calendar_example[action]', 'week');
         $request = $request->withQueryParameter('tx_calendar_example[week][week]', '02');
         $request = $request->withQueryParameter('tx_calendar_example[week][year]', '2020');
-        $result = $this->executeFrontendRequest($request);
+        $result = $this->executeFrontendSubRequest($request);
 
         self::assertSame(200, $result->getStatusCode());
         $html = $result->getBody()->__toString();
         self::assertStringContainsString('02 2020', $html);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function modifiedVariablesForCurrentMonth(): void
     {
         $request = new InternalRequest();
         $request = $request->withPageId(1);
         $request = $request->withQueryParameter('tx_calendar_example[action]', 'month');
-        $result = $this->executeFrontendRequest($request);
+        $result = $this->executeFrontendSubRequest($request);
 
         self::assertSame(200, $result->getStatusCode());
         $html = $result->getBody()->__toString();
         self::assertStringContainsString('modifiedVariable', $html);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function pluginNameForCurrentMonth(): void
     {
         $request = new InternalRequest();
         $request = $request->withPageId(1);
         $request = $request->withQueryParameter('tx_calendar_example[action]', 'month');
-        $result = $this->executeFrontendRequest($request);
+        $result = $this->executeFrontendSubRequest($request);
 
         self::assertSame(200, $result->getStatusCode());
         $html = $result->getBody()->__toString();
         self::assertStringContainsString('PluginName: Example', $html);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function contextForCurrentMonth(): void
     {
         $request = new InternalRequest();
         $request = $request->withPageId(1);
         $request = $request->withQueryParameter('tx_calendar_example[action]', 'month');
-        $result = $this->executeFrontendRequest($request);
+        $result = $this->executeFrontendSubRequest($request);
 
         self::assertSame(200, $result->getStatusCode());
         $html = $result->getBody()->__toString();
@@ -293,41 +265,35 @@ class CalendarControllerTest extends FunctionalTestCase
         self::assertStringContainsString('Title: Page Title', $html);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function customDataForCurrentMonth(): void
     {
         $request = new InternalRequest();
         $request = $request->withPageId(1);
         $request = $request->withQueryParameter('tx_calendar_example[action]', 'month');
-        $result = $this->executeFrontendRequest($request);
+        $result = $this->executeFrontendSubRequest($request);
 
         self::assertSame(200, $result->getStatusCode());
         $html = $result->getBody()->__toString();
-        self::assertStringContainsString(strftime('%B %Y'), $html);
+        self::assertStringContainsString((new DateFormatter())->strftime('%B %Y', 'now', 'de-DE'), $html);
         self::assertStringContainsString('exampleValue', $html);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function configuredMonth(): void
     {
         $request = new InternalRequest();
         $request = $request->withPageId(1);
         $request = $request->withQueryParameter('tx_calendar_example[action]', 'month');
         $request = $request->withQueryParameter('typoScriptDefaults', '1');
-        $result = $this->executeFrontendRequest($request);
+        $result = $this->executeFrontendSubRequest($request);
 
         self::assertSame(200, $result->getStatusCode());
         $html = $result->getBody()->__toString();
         self::assertStringContainsString('November 1988', $html);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function providedMonth(): void
     {
         $request = new InternalRequest();
@@ -335,7 +301,7 @@ class CalendarControllerTest extends FunctionalTestCase
         $request = $request->withQueryParameter('tx_calendar_example[action]', 'month');
         $request = $request->withQueryParameter('tx_calendar_example[month][month]', '11');
         $request = $request->withQueryParameter('tx_calendar_example[month][year]', '2020');
-        $result = $this->executeFrontendRequest($request);
+        $result = $this->executeFrontendSubRequest($request);
 
         self::assertSame(200, $result->getStatusCode());
         $html = $result->getBody()->__toString();
@@ -343,45 +309,39 @@ class CalendarControllerTest extends FunctionalTestCase
         self::assertStringContainsString('exampleValue', $html);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function modifiedVariablesForCurrentYear(): void
     {
         $request = new InternalRequest();
         $request = $request->withPageId(1);
         $request = $request->withQueryParameter('tx_calendar_example[action]', 'year');
-        $result = $this->executeFrontendRequest($request);
+        $result = $this->executeFrontendSubRequest($request);
 
         self::assertSame(200, $result->getStatusCode());
         $html = $result->getBody()->__toString();
         self::assertStringContainsString('modifiedVariable', $html);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function pluginNameForCurrentYear(): void
     {
         $request = new InternalRequest();
         $request = $request->withPageId(1);
         $request = $request->withQueryParameter('tx_calendar_example[action]', 'year');
-        $result = $this->executeFrontendRequest($request);
+        $result = $this->executeFrontendSubRequest($request);
 
         self::assertSame(200, $result->getStatusCode());
         $html = $result->getBody()->__toString();
         self::assertStringContainsString('PluginName: Example', $html);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function contextForCurrentYear(): void
     {
         $request = new InternalRequest();
         $request = $request->withPageId(1);
         $request = $request->withQueryParameter('tx_calendar_example[action]', 'year');
-        $result = $this->executeFrontendRequest($request);
+        $result = $this->executeFrontendSubRequest($request);
 
         self::assertSame(200, $result->getStatusCode());
         $html = $result->getBody()->__toString();
@@ -389,15 +349,13 @@ class CalendarControllerTest extends FunctionalTestCase
         self::assertStringContainsString('Title: Page Title', $html);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function customDataForCurrentYear(): void
     {
         $request = new InternalRequest();
         $request = $request->withPageId(1);
         $request = $request->withQueryParameter('tx_calendar_example[action]', 'year');
-        $result = $this->executeFrontendRequest($request);
+        $result = $this->executeFrontendSubRequest($request);
 
         self::assertSame(200, $result->getStatusCode());
         $html = $result->getBody()->__toString();
@@ -405,32 +363,28 @@ class CalendarControllerTest extends FunctionalTestCase
         self::assertStringContainsString('exampleValue', $html);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function configuredYear(): void
     {
         $request = new InternalRequest();
         $request = $request->withPageId(1);
         $request = $request->withQueryParameter('tx_calendar_example[action]', 'year');
         $request = $request->withQueryParameter('typoScriptDefaults', '1');
-        $result = $this->executeFrontendRequest($request);
+        $result = $this->executeFrontendSubRequest($request);
 
         self::assertSame(200, $result->getStatusCode());
         $html = $result->getBody()->__toString();
         self::assertStringContainsString('1988', $html);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function providedYear(): void
     {
         $request = new InternalRequest();
         $request = $request->withPageId(1);
         $request = $request->withQueryParameter('tx_calendar_example[action]', 'year');
         $request = $request->withQueryParameter('tx_calendar_example[year][year]', '2020');
-        $result = $this->executeFrontendRequest($request);
+        $result = $this->executeFrontendSubRequest($request);
 
         self::assertSame(200, $result->getStatusCode());
         $html = $result->getBody()->__toString();

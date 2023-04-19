@@ -40,7 +40,7 @@ class ExampleDataFactory implements ForeignDataFactory, ContextSpecificFactory
         $this->context = $context;
     }
 
-    public function getData(Day $day)
+    public function getData(Day $day): mixed
     {
         return [
             'exampleKey' => 'exampleValue',

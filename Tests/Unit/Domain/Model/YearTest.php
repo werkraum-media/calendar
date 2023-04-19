@@ -21,22 +21,19 @@ namespace WerkraumMedia\Calendar\Tests\Unit\Domain\Model;
  * 02110-1301, USA.
  */
 
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
 use WerkraumMedia\Calendar\Domain\Model\Month;
 use WerkraumMedia\Calendar\Domain\Model\Year;
 use WerkraumMedia\Calendar\Tests\ForcePropertyTrait;
 
-/**
- * @covers WerkraumMedia\Calendar\Domain\Model\Year
- * @testdox A year
- */
+#[TestDox('A year')]
 class YearTest extends TestCase
 {
     use ForcePropertyTrait;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canBeCreated(): void
     {
         $subject = new Year(2020);
@@ -44,9 +41,7 @@ class YearTest extends TestCase
         self::assertInstanceOf(Year::class, $subject);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsPreviousYear(): void
     {
         $subject = new Year(2020);
@@ -57,9 +52,7 @@ class YearTest extends TestCase
         self::assertSame('2019', $result->getDateTimeInstance()->format('Y'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsNextYear(): void
     {
         $subject = new Year(2020);
@@ -70,9 +63,7 @@ class YearTest extends TestCase
         self::assertSame('2021', $result->getDateTimeInstance()->format('Y'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsAsUrlArguments(): void
     {
         $subject = new Year(2020);
@@ -82,9 +73,7 @@ class YearTest extends TestCase
         ], $subject->getAsUrlArgument());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsMonthsForYear2020(): void
     {
         $subject = new Year(2020);
@@ -96,13 +85,11 @@ class YearTest extends TestCase
         foreach ($result as $index => $month) {
             self::assertInstanceOf(Month::class, $month);
             $monthNumber = $index + 1;
-            self::assertSame((string) $monthNumber, $month->getDateTimeInstance()->format('n'));
+            self::assertSame((string)$monthNumber, $month->getDateTimeInstance()->format('n'));
         }
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsSameMonthsOnSecondCall(): void
     {
         $subject = new Year(2020);
@@ -110,9 +97,7 @@ class YearTest extends TestCase
         self::assertSame($subject->getMonths(), $subject->getMonths());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsAllDaysFor2020(): void
     {
         $subject = new Year(2020);
@@ -124,9 +109,7 @@ class YearTest extends TestCase
         self::assertSame('2020-12-31', $result[365]->getDateTimeInstance()->format('Y-m-d'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsNotActiveIfAllMonthsAreInactive(): void
     {
         $subject = new Year(2020);
@@ -139,9 +122,7 @@ class YearTest extends TestCase
         self::assertFalse($subject->isActive());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsActiveIfASingleMonthIsActive(): void
     {
         $subject = new Year(2020);

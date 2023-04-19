@@ -21,22 +21,19 @@ namespace WerkraumMedia\Calendar\Tests\Unit\Domain\Model;
  * 02110-1301, USA.
  */
 
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
 use WerkraumMedia\Calendar\Domain\Model\Month;
 use WerkraumMedia\Calendar\Domain\Model\Week;
 use WerkraumMedia\Calendar\Tests\ForcePropertyTrait;
 
-/**
- * @covers WerkraumMedia\Calendar\Domain\Model\Month
- * @testdox A month
- */
+#[TestDox('A month')]
 class MonthTest extends TestCase
 {
     use ForcePropertyTrait;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canBeCreated(): void
     {
         $subject = new Month(1, 2020);
@@ -44,9 +41,7 @@ class MonthTest extends TestCase
         self::assertInstanceOf(Month::class, $subject);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsPreviousMonthForSameYear(): void
     {
         $subject = new Month(2, 2020);
@@ -55,9 +50,7 @@ class MonthTest extends TestCase
         self::assertSame('2020', $subject->getPreviousMonth()->getDateTimeInstance()->format('Y'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsPreviousMonthForPreviousYear(): void
     {
         $subject = new Month(1, 2020);
@@ -66,9 +59,7 @@ class MonthTest extends TestCase
         self::assertSame('2019', $subject->getPreviousMonth()->getDateTimeInstance()->format('Y'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsNextMonthForSameYear(): void
     {
         $subject = new Month(1, 2020);
@@ -77,9 +68,7 @@ class MonthTest extends TestCase
         self::assertSame('2020', $subject->getNextMonth()->getDateTimeInstance()->format('Y'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsNextMonthForNextYear(): void
     {
         $subject = new Month(12, 2020);
@@ -88,9 +77,7 @@ class MonthTest extends TestCase
         self::assertSame('2021', $subject->getNextMonth()->getDateTimeInstance()->format('Y'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsFiveWeeksForDecember2020(): void
     {
         $subject = new Month(12, 2020);
@@ -101,9 +88,7 @@ class MonthTest extends TestCase
         self::assertSame('2021-01-03', $weeks[4]->getDays()[6]->getDateTimeInstance()->format('Y-m-d'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsSixWeeksForNovember2020(): void
     {
         $subject = new Month(11, 2020);
@@ -114,9 +99,7 @@ class MonthTest extends TestCase
         self::assertSame('2020-12-06', $weeks[5]->getDays()[6]->getDateTimeInstance()->format('Y-m-d'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsSameWeeksOnSecondCall(): void
     {
         $subject = new Month(11, 2020);
@@ -124,9 +107,7 @@ class MonthTest extends TestCase
         self::assertSame($subject->getWeeks(), $subject->getWeeks());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsAllDaysOfTheFebruaryMonth2021(): void
     {
         $subject = new Month(02, 2021);
@@ -138,9 +119,7 @@ class MonthTest extends TestCase
         self::assertSame('2021-02-28', $result[27]->getDateTimeInstance()->format('Y-m-d'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsWeeksIfLastDecemberWeekIsInNextYear(): void
     {
         $subject = new Month(12, 2024);
@@ -160,9 +139,7 @@ class MonthTest extends TestCase
         self::assertSame('2024-12-29', $days[6]->getDateTimeInstance()->format('Y-m-d'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsAllDaysOfTheJuneMonth2021(): void
     {
         $subject = new Month(06, 2021);
@@ -174,9 +151,7 @@ class MonthTest extends TestCase
         self::assertSame('2021-06-30', $result[29]->getDateTimeInstance()->format('Y-m-d'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsSameDaysOnSecondCall(): void
     {
         $subject = new Month(06, 2021);
@@ -184,9 +159,7 @@ class MonthTest extends TestCase
         self::assertSame($subject->getDays(), $subject->getDays());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function providesDateTimeInstance(): void
     {
         $subject = new Month(02, 2018);
@@ -194,9 +167,7 @@ class MonthTest extends TestCase
         self::assertSame('2018-02-01', $subject->getDateTimeInstance()->format('Y-m-d'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsAsUrlArguments(): void
     {
         $subject = new Month(02, 2018);
@@ -207,9 +178,7 @@ class MonthTest extends TestCase
         ], $subject->getAsUrlArgument());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsNotActiveIfAllWeeksAreInactive(): void
     {
         $subject = new Month(02, 2018);
@@ -222,9 +191,7 @@ class MonthTest extends TestCase
         self::assertFalse($subject->isActive());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsActiveIfASingleWeekIsActive(): void
     {
         $subject = new Month(02, 2018);

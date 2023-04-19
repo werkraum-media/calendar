@@ -21,19 +21,16 @@ namespace WerkraumMedia\Calendar\Tests\Unit\Domain\Model;
  * 02110-1301, USA.
  */
 
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use WerkraumMedia\Calendar\Domain\Model\Day;
 use WerkraumMedia\Calendar\Domain\Model\ForeignDataFactory;
 use WerkraumMedia\Calendar\Domain\Model\IsDayActive;
-use WerkraumMedia\Calendar\Domain\Model\NullDataFactory;
 use WerkraumMedia\Calendar\Tests\ForcePropertyTrait;
 
-/**
- * @covers WerkraumMedia\Calendar\Domain\Model\Day
- * @testdox A day
- */
+#[TestDox('A day')]
 class DayTest extends TestCase
 {
     use ForcePropertyTrait;
@@ -44,9 +41,7 @@ class DayTest extends TestCase
         parent::tearDown();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canBeCreated(): void
     {
         $subject = new Day(
@@ -56,9 +51,7 @@ class DayTest extends TestCase
         self::assertInstanceOf(Day::class, $subject);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function providesDateTimeInstance(): void
     {
         $dateTimeInstance = new \DateTime();
@@ -69,9 +62,7 @@ class DayTest extends TestCase
         self::assertInstanceOf(\DateTimeImmutable::class, $subject->getDateTimeInstance());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function providedDateTimeInstanceHasExpectedDay(): void
     {
         $dateTimeInstance = new \DateTime();
@@ -82,9 +73,7 @@ class DayTest extends TestCase
         self::assertSame($dateTimeInstance->format('d.m.Y'), $subject->getDateTimeInstance()->format('d.m.Y'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function providedDateTimeInstanceHasMidnight(): void
     {
         $dateTimeInstance = new \DateTime();
@@ -95,9 +84,7 @@ class DayTest extends TestCase
         self::assertSame('00:00:00', $subject->getDateTimeInstance()->format('H:i:s'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function providesItselfAsUrlArgument(): void
     {
         $subject = new Day(new \DateTime('2020-10-19'));
@@ -105,9 +92,7 @@ class DayTest extends TestCase
         self::assertSame(['day' => '2020-10-19'], $subject->getAsUrlArgument());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function isNotActiveIfNoForeignDataWithInterfaceExists(): void
     {
         $subject = new Day(new \DateTime('2020-10-19'));
@@ -117,9 +102,7 @@ class DayTest extends TestCase
         self::assertFalse($subject->isActive());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function isNotActiveIfForeignDataIsNotActive(): void
     {
         $subject = new Day(new \DateTime('2020-10-19'));
@@ -133,9 +116,7 @@ class DayTest extends TestCase
         self::assertFalse($subject->isActive());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function initializesForeignDataViaFactory(): void
     {
         $subject = new Day(new \DateTime('2020-10-19'));

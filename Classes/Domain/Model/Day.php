@@ -22,7 +22,6 @@ namespace WerkraumMedia\Calendar\Domain\Model;
  */
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 class Day
 {
@@ -44,7 +43,6 @@ class Day
     public function __construct(
         \DateTime $day
     ) {
-        $this->periods = new ObjectStorage();
         $this->day = \DateTimeImmutable::createFromMutable($day)->modify('midnight');
     }
 
@@ -58,7 +56,7 @@ class Day
         return false;
     }
 
-    public function getForeignData()
+    public function getForeignData(): mixed
     {
         $this->initializeForeignData();
 
