@@ -80,7 +80,7 @@ class Week
 
         return new self(
             (int) $newDay->format('W'),
-            (int) $newDay->format('Y')
+            (int) $newDay->format('o')
         );
     }
 
@@ -90,7 +90,7 @@ class Week
 
         return new self(
             (int) $newDay->format('W'),
-            (int) $newDay->format('Y')
+            (int) $newDay->format('o')
         );
     }
 

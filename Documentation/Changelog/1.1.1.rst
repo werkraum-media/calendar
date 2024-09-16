@@ -14,7 +14,12 @@ Nothing
 Fixes
 -----
 
-Nothing
+* Fix broken month view if last week of December is in next year.
+
+  The cause was using the wrong character in formatting the year.
+  We now switch from `Y` to `o` which will work based on the week instead of date.
+  This is necessary as we provide this year to the week,
+  and therefore need the year of the week, not day.
 
 Tasks
 -----

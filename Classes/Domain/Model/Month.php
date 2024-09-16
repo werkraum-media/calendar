@@ -78,7 +78,7 @@ class Month
         while ($currentDay <= $lastDay) {
             $this->weeks[] = new Week(
                 (int) $currentDay->format('W'),
-                (int) $currentDay->format('Y')
+                (int) $currentDay->format('o')
             );
 
             $currentDay = $currentDay->modify('+7 days');
