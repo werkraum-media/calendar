@@ -1,0 +1,31 @@
+1.1.1
+=====
+
+Breaking
+--------
+
+Nothing
+
+Features
+--------
+
+Nothing
+
+Fixes
+-----
+
+Nothing
+
+Tasks
+-----
+
+* Adopt functional tests for latest TYPO3.
+
+  TYPO3 now would return a 404 if cHash doesn't match.
+  We now exclude the parameters within our functional tests to not run into this issue.
+
+Deprecation
+-----------
+
+Nothing
+
