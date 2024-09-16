@@ -46,6 +46,17 @@ class CalendarControllerTest extends FunctionalTestCase
         'typo3conf/ext/calendar/Tests/Fixtures/Sites' => 'typo3conf/sites',
     ];
 
+    protected $configurationToUseInTestInstance = [
+        'FE' => [
+            'cacheHash' => [
+                'excludedParameters' => [
+                    '^tx_calendar_example[',
+                    '^typoScriptDefaults',
+                ],
+            ],
+        ],
+    ];
+
     protected function setUp(): void
     {
         parent::setUp();
