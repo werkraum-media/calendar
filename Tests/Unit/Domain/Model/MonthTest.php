@@ -141,6 +141,28 @@ class MonthTest extends TestCase
     /**
      * @test
      */
+    public function returnsWeeksIfLastDecemberWeekIsInNextYear(): void
+    {
+        $subject = new Month(12, 2024);
+
+        $result = $subject->getWeeks();
+
+        self::assertCount(6, $result);
+
+        $week = array_pop($result);
+        $days = $week->getDays();
+        self::assertSame('2024-12-30', $days[0]->getDateTimeInstance()->format('Y-m-d'));
+        self::assertSame('2025-01-05', $days[6]->getDateTimeInstance()->format('Y-m-d'));
+
+        $week = array_pop($result);
+        $days = $week->getDays();
+        self::assertSame('2024-12-23', $days[0]->getDateTimeInstance()->format('Y-m-d'));
+        self::assertSame('2024-12-29', $days[6]->getDateTimeInstance()->format('Y-m-d'));
+    }
+
+    /**
+     * @test
+     */
     public function returnsAllDaysOfTheJuneMonth2021(): void
     {
         $subject = new Month(06, 2021);
