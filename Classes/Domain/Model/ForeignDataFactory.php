@@ -27,5 +27,5 @@ interface ForeignDataFactory
      * Receives a specific day and may return arbirtrary data.
      * This data is attached to the day and available through getter.
      */
-    public function getData(Day $day);
+    public function getData(Day $day): mixed;
 }

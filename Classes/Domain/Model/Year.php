@@ -21,9 +21,6 @@ namespace WerkraumMedia\Calendar\Domain\Model;
  * 02110-1301, USA.
  */
 
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
-
 class Year
 {
     /**
@@ -64,7 +61,7 @@ class Year
 
         while ($currentMonth <= $lastMonth) {
             $this->months[] = new Month(
-                (int) $currentMonth->format('n'),
+                (int)$currentMonth->format('n'),
                 $this->year
             );
 

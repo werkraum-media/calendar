@@ -21,22 +21,19 @@ namespace WerkraumMedia\Calendar\Tests\Unit\Domain\Model;
  * 02110-1301, USA.
  */
 
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
 use WerkraumMedia\Calendar\Domain\Model\Day;
 use WerkraumMedia\Calendar\Domain\Model\Week;
 use WerkraumMedia\Calendar\Tests\ForcePropertyTrait;
 
-/**
- * @covers WerkraumMedia\Calendar\Domain\Model\Week
- * @testdox A week
- */
+#[TestDox('A week')]
 class WeekTest extends TestCase
 {
     use ForcePropertyTrait;
 
-    /**
-     * @test
-     */
+    #[Test]
     public function canBeCreated(): void
     {
         $subject = new Week(1, 2020);
@@ -44,9 +41,7 @@ class WeekTest extends TestCase
         self::assertInstanceOf(Week::class, $subject);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsSevenDays(): void
     {
         $subject = new Week(1, 2020);
@@ -54,9 +49,7 @@ class WeekTest extends TestCase
         self::assertCount(7, $subject->getDays());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsSameDaysOnSecondCall(): void
     {
         $subject = new Week(1, 2020);
@@ -64,9 +57,7 @@ class WeekTest extends TestCase
         self::assertSame($subject->getDays(), $subject->getDays());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsDaysForWeek1(): void
     {
         $subject = new Week(1, 2020);
@@ -81,9 +72,7 @@ class WeekTest extends TestCase
         self::assertSame('2020-01-05', $days[6]->getDateTimeInstance()->format('Y-m-d'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsDaysForWeek53(): void
     {
         $subject = new Week(53, 2020);
@@ -98,9 +87,7 @@ class WeekTest extends TestCase
         self::assertSame('2021-01-03', $days[6]->getDateTimeInstance()->format('Y-m-d'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsPreviousWeekForSameYear(): void
     {
         $subject = new Week(2, 2020);
@@ -109,9 +96,7 @@ class WeekTest extends TestCase
         self::assertSame('2020', $subject->getPreviousWeek()->getDateTimeInstance()->format('Y'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsPreviousWeekForYearSwitchFrom2019To2018(): void
     {
         $subject = new Week(1, 2019);
@@ -120,9 +105,7 @@ class WeekTest extends TestCase
         self::assertSame('2018', $subject->getPreviousWeek()->getDateTimeInstance()->format('Y'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsPreviousWeekForYearSwitchFrom2018To2017(): void
     {
         $subject = new Week(1, 2018);
@@ -131,9 +114,7 @@ class WeekTest extends TestCase
         self::assertSame('2017', $subject->getPreviousWeek()->getDateTimeInstance()->format('Y'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsPreviousWeekForPreviousYear(): void
     {
         $subject = new Week(1, 2021);
@@ -142,9 +123,7 @@ class WeekTest extends TestCase
         self::assertSame('2020', $subject->getPreviousWeek()->getDateTimeInstance()->format('Y'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsNextWeekForSameYear(): void
     {
         $subject = new Week(1, 2020);
@@ -153,9 +132,7 @@ class WeekTest extends TestCase
         self::assertSame('2020', $subject->getNextWeek()->getDateTimeInstance()->format('Y'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsNextWeekForNextYear(): void
     {
         $subject = new Week(53, 2020);
@@ -164,9 +141,7 @@ class WeekTest extends TestCase
         self::assertSame('2021', $subject->getNextWeek()->getDateTimeInstance()->format('Y'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsNextWeekForNextYearFrom2018To2019(): void
     {
         $subject = new Week(52, 2018);
@@ -175,9 +150,7 @@ class WeekTest extends TestCase
         self::assertSame('2019', $subject->getNextWeek()->getDateTimeInstance()->format('Y'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function providesDateTimeInstance(): void
     {
         $subject = new Week(52, 2018);
@@ -186,9 +159,7 @@ class WeekTest extends TestCase
         self::assertSame('2018-12-27 Thursday', $subject->getDateTimeInstance()->format('Y-m-d l'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function providesItselfAsUrlArgument(): void
     {
         $subject = new Week(52, 2018);
@@ -199,9 +170,7 @@ class WeekTest extends TestCase
         ], $subject->getAsUrlArgument());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsNotActiveIfAllDaysAreInactive(): void
     {
         $subject = new Week(02, 2018);
@@ -214,9 +183,7 @@ class WeekTest extends TestCase
         self::assertFalse($subject->isActive());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsActiveIfASingleDayActive(): void
     {
         $subject = new Week(02, 2018);

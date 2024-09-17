@@ -21,9 +21,6 @@ namespace WerkraumMedia\Calendar\Domain\Model;
  * 02110-1301, USA.
  */
 
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
-
 class Month
 {
     /**
@@ -77,8 +74,8 @@ class Month
 
         while ($currentDay <= $lastDay) {
             $this->weeks[] = new Week(
-                (int) $currentDay->format('W'),
-                (int) $currentDay->format('o')
+                (int)$currentDay->format('W'),
+                (int)$currentDay->format('o')
             );
 
             $currentDay = $currentDay->modify('+7 days');

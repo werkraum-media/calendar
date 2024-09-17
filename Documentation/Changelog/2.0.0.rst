@@ -1,0 +1,36 @@
+2.0.0
+=====
+
+Breaking
+--------
+
+* Drop support for TYPO3 v10.4 LTS and PHP 7.3, 7.4, 8.0.
+
+Features
+--------
+
+* Add compatibility for TYPO3 v12.4.0 and PHP 8.3.
+
+Fixes
+-----
+
+Nothing
+
+Tasks
+-----
+
+* Switch CGL from ecs to php-cs-fixer.
+
+  As that's the tool we use everywhere else.
+  Use the same config as well.
+
+* Add PHPStan
+
+  As we always add that tool.
+  It helps us to find bugs and keep code clean.
+
+Deprecation
+-----------
+
+Nothing
+

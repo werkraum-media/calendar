@@ -1,0 +1,10 @@
+parameters:
+  level: 'max'
+  paths:
+    - 'Classes'
+    - 'Configuration'
+    - 'Tests'
+  reportUnmatchedIgnoredErrors: true
+  ignoreErrors:
+    -
+      identifier: 'missingType.iterableValue'

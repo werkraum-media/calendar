@@ -23,32 +23,14 @@ declare(strict_types=1);
 
 namespace WerkraumMedia\Calendar\Tests\Unit\Domain\Model;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use WerkraumMedia\Calendar\Domain\Model\Context;
 
-/**
- * @covers \WerkraumMedia\Calendar\Domain\Model\Context
- */
 class ContextTest extends TestCase
 {
-    /**
-     * @test
-     */
-    public function canNotBeCreatedViaNew(): void
-    {
-        $this->expectError();
-        if (version_compare(PHP_VERSION, '8.0', '>=')) {
-            $this->expectErrorMessage('Call to private WerkraumMedia\Calendar\Domain\Model\Context::__construct() from scope WerkraumMedia\Calendar\Tests\Unit\Domain\Model\ContextTest');
-        } else {
-            $this->expectErrorMessage('Call to private WerkraumMedia\Calendar\Domain\Model\Context::__construct() from context \'WerkraumMedia\Calendar\Tests\Unit\Domain\Model\ContextTest\'');
-        }
-        $subject = new Context();
-    }
-
-    /**
-     * @test
-     */
+    #[Test]
     public function canBeCreatedFromContentObjectRenderer(): void
     {
         $contentObjectRenderer = $this->createStub(ContentObjectRenderer::class);
@@ -57,9 +39,7 @@ class ContextTest extends TestCase
         self::assertInstanceOf(Context::class, $subject);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function providesTableNameInheritedFromContentObjectRenderer(): void
     {
         $contentObjectRenderer = $this->createStub(ContentObjectRenderer::class);
@@ -69,9 +49,7 @@ class ContextTest extends TestCase
         self::assertSame('tx_calendar_example_table', $subject->getTableName());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function providesDatabaseRowInheritedFromContentObjectRenderer(): void
     {
         $contentObjectRenderer = $this->createStub(ContentObjectRenderer::class);

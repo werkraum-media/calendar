@@ -11,7 +11,7 @@ page {
     10 =< tt_content.calendar_example.20
 }
 
-[request.getQueryParams()['typoScriptDefaults'] == 1]
+[traverse(request.getQueryParams(), 'typoScriptDefaults') == 1]
     plugin.tx_calendar_example {
         settings {
             arguments {

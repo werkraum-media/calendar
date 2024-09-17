@@ -23,7 +23,7 @@ namespace WerkraumMedia\Calendar\Tests;
 
 trait ForcePropertyTrait
 {
-    protected function forceProperty($subject, string $name, $value)
+    protected function forceProperty(object $subject, string $name, mixed $value): void
     {
         $objectReflection = new \ReflectionObject($subject);
         $property = $objectReflection->getProperty($name);

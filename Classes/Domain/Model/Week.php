@@ -79,8 +79,8 @@ class Week
         $newDay = $this->getWeek()->modify('-1 week');
 
         return new self(
-            (int) $newDay->format('W'),
-            (int) $newDay->format('o')
+            (int)$newDay->format('W'),
+            (int)$newDay->format('o')
         );
     }
 
@@ -89,8 +89,8 @@ class Week
         $newDay = $this->getWeek()->modify('+1 week');
 
         return new self(
-            (int) $newDay->format('W'),
-            (int) $newDay->format('o')
+            (int)$newDay->format('W'),
+            (int)$newDay->format('o')
         );
     }
 

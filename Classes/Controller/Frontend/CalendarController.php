@@ -21,11 +21,14 @@ namespace WerkraumMedia\Calendar\Controller\Frontend;
  * 02110-1301, USA.
  */
 
+use Psr\Http\Message\ResponseInterface;
+use RuntimeException;
 use TYPO3\CMS\Core\TypoScript\TypoScriptService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
+use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use WerkraumMedia\Calendar\Domain\Model\Context;
 use WerkraumMedia\Calendar\Domain\Model\ContextSpecificFactory;
 use WerkraumMedia\Calendar\Domain\Model\Day;
@@ -35,7 +38,7 @@ use WerkraumMedia\Calendar\Domain\Model\Week;
 use WerkraumMedia\Calendar\Domain\Model\Year;
 use WerkraumMedia\Calendar\Events\AssignTemplateVariables;
 
-class CalendarController extends ActionController
+final class CalendarController extends ActionController
 {
     /**
      * @var ForeignDataFactory
@@ -55,19 +58,19 @@ class CalendarController extends ActionController
         $this->typoScriptService = $typoScriptService;
     }
 
-    public function initializeAction()
+    public function initializeAction(): void
     {
         if ($this->foreignDataFactory instanceof ContextSpecificFactory) {
             $this->foreignDataFactory->setContext(
-                Context::createFromContentObjectRenderer($this->configurationManager->getContentObject())
+                Context::createFromContentObjectRenderer($this->getContentObjectRenderer())
             );
         }
     }
 
-    public function initializeYearAction()
+    public function initializeYearAction(): void
     {
         if ($this->request->hasArgument('year') === false) {
-            $this->request->setArguments([
+            $this->request = $this->request->withArguments([
                 'year' => [
                     'year' => $this->getDefaultArgumentValue('year'),
                 ],
@@ -82,17 +85,19 @@ class CalendarController extends ActionController
     /**
      * @Extbase\IgnoreValidation("year")
      */
-    public function yearAction(Year $year)
+    public function yearAction(Year $year): ResponseInterface
     {
         $this->assignVariables([
             'year' => $year,
         ]);
+
+        return $this->htmlResponse();
     }
 
-    public function initializeMonthAction()
+    public function initializeMonthAction(): void
     {
         if ($this->request->hasArgument('month') === false) {
-            $this->request->setArguments([
+            $this->request = $this->request->withArguments([
                 'month' => [
                     'month' => $this->getDefaultArgumentValue('month'),
                     'year' => $this->getDefaultArgumentValue('year'),
@@ -108,17 +113,19 @@ class CalendarController extends ActionController
     /**
      * @Extbase\IgnoreValidation("month")
      */
-    public function monthAction(Month $month)
+    public function monthAction(Month $month): ResponseInterface
     {
         $this->assignVariables([
             'month' => $month,
         ]);
+
+        return $this->htmlResponse();
     }
 
-    public function initializeWeekAction()
+    public function initializeWeekAction(): void
     {
         if ($this->request->hasArgument('week') === false) {
-            $this->request->setArguments([
+            $this->request = $this->request->withArguments([
                 'week' => [
                     'week' => $this->getDefaultArgumentValue('week'),
                     'year' => $this->getDefaultArgumentValue('year'),
@@ -134,17 +141,19 @@ class CalendarController extends ActionController
     /**
      * @Extbase\IgnoreValidation("week")
      */
-    public function weekAction(Week $week)
+    public function weekAction(Week $week): ResponseInterface
     {
         $this->assignVariables([
             'week' => $week,
         ]);
+
+        return $this->htmlResponse();
     }
 
-    public function initializeDayAction()
+    public function initializeDayAction(): void
     {
         if ($this->request->hasArgument('day') === false) {
-            $this->request->setArguments([
+            $this->request = $this->request->withArguments([
                 'day' => [
                     'day' => $this->getDefaultArgumentValue('day'),
                 ],
@@ -167,11 +176,13 @@ class CalendarController extends ActionController
     /**
      * @Extbase\IgnoreValidation("day")
      */
-    public function dayAction(Day $day)
+    public function dayAction(Day $day): ResponseInterface
     {
         $this->assignVariables([
             'day' => $day,
         ]);
+
+        return $this->htmlResponse();
     }
 
     private function assignVariables(array $variables): void
@@ -202,12 +213,23 @@ class CalendarController extends ActionController
             'day' => date('Y-m-d'),
         ];
 
-        $value = $this->configurationManager->getContentObject()->stdWrapValue(
+        $value = $this->getContentObjectRenderer()->stdWrapValue(
             $argumentName,
             $arguments,
             $fallbackValues[$argumentName]
         );
 
-        return $value;
+        return (string)$value;
+    }
+
+    private function getContentObjectRenderer(): ContentObjectRenderer
+    {
+        $contentObjectRenderer = $this->request->getAttribute('currentContentObject');
+
+        if (! $contentObjectRenderer instanceof ContentObjectRenderer) {
+            throw new RuntimeException('Could not fetch currentContentObject from request.', 1726490796);
+        }
+
+        return $contentObjectRenderer;
     }
 }

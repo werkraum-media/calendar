@@ -23,7 +23,7 @@ namespace WerkraumMedia\Calendar\Domain\Model;
 
 class NullDataFactory implements ForeignDataFactory
 {
-    public function getData(Day $day)
+    public function getData(Day $day): mixed
     {
         return null;
     }

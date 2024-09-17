@@ -21,18 +21,14 @@ namespace WerkraumMedia\Calendar\Tests\Unit\Domain\Model;
  * 02110-1301, USA.
  */
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use WerkraumMedia\Calendar\Domain\Model\Day;
 use WerkraumMedia\Calendar\Domain\Model\NullDataFactory;
 
-/**
- * @covers WerkraumMedia\Calendar\Domain\Model\NullDataFactory
- */
 class NullDataFactoryTest extends TestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsNull(): void
     {
         $subject = new NullDataFactory();
