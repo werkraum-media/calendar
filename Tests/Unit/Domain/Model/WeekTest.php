@@ -175,7 +175,7 @@ class WeekTest extends TestCase
     {
         $subject = new Week(02, 2018);
 
-        $day = $this->createStub(Day::class);
+        $day = self::createStub(Day::class);
         $day->method('isActive')->willReturn(false);
         $days = [$day];
         $this->forceProperty($subject, 'days', $days);
@@ -188,9 +188,9 @@ class WeekTest extends TestCase
     {
         $subject = new Week(02, 2018);
 
-        $day = $this->createStub(Day::class);
+        $day = self::createStub(Day::class);
         $day->method('isActive')->willReturn(true);
-        $day2 = $this->createStub(Day::class);
+        $day2 = self::createStub(Day::class);
         $day2->method('isActive')->willReturn(false);
         $days = [$day, $day2];
         $this->forceProperty($subject, 'days', $days);

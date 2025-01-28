@@ -1,7 +1,7 @@
 { pkgs ? import <nixpkgs> { } }:
 
 let
-  php = pkgs.php82.buildEnv {
+  php = pkgs.php84.buildEnv {
     extensions = { enabled, all }: enabled ++ (with all; [
       xdebug
     ]);
@@ -20,7 +20,7 @@ let
     ];
     text = ''
       rm -rf vendor/ .Build/
-      composer install --prefer-dist --no-progress --working-dir="$PROJECT_ROOT"
+      composer install --prefer-dist --no-progress
     '';
   };
 
@@ -35,7 +35,7 @@ let
     '';
   };
 
-in pkgs.mkShell {
+in pkgs.mkShellNoCC {
   name = "TYPO3 Extension Watchlist";
   buildInputs = [
     projectInstall
@@ -44,9 +44,5 @@ in pkgs.mkShell {
     composer
   ];
 
-  shellHook = ''
-    export PROJECT_ROOT="$(pwd)"
-
-    export typo3DatabaseDriver=pdo_sqlite
-  '';
+  typo3DatabaseDriver = "pdo_sqlite";
 }

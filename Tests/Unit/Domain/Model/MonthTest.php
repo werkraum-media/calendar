@@ -183,7 +183,7 @@ class MonthTest extends TestCase
     {
         $subject = new Month(02, 2018);
 
-        $week = $this->createStub(Week::class);
+        $week = self::createStub(Week::class);
         $week->method('isActive')->willReturn(false);
         $weeks = [$week];
         $this->forceProperty($subject, 'weeks', $weeks);
@@ -196,9 +196,9 @@ class MonthTest extends TestCase
     {
         $subject = new Month(02, 2018);
 
-        $week = $this->createStub(Week::class);
+        $week = self::createStub(Week::class);
         $week->method('isActive')->willReturn(true);
-        $week2 = $this->createStub(Week::class);
+        $week2 = self::createStub(Week::class);
         $week2->method('isActive')->willReturn(false);
         $weeks = [$week, $week2];
         $this->forceProperty($subject, 'weeks', $weeks);

@@ -21,8 +21,8 @@ return [
             'clear' => 3,
             'constants' => 'databasePlatform = mysql',
             'config' => '
-                <INCLUDE_TYPOSCRIPT: source="FILE:EXT:calendar_example/Configuration/TypoScript/Setup.typoscript">
-                <INCLUDE_TYPOSCRIPT: source="FILE:EXT:fluid_styled_content/Configuration/TypoScript/setup.typoscript">
+                @import "EXT:calendar_example/Configuration/TypoScript/setup.typoscript"
+                @import "EXT:fluid_styled_content/Configuration/TypoScript/setup.typoscript"
             ',
         ],
     ],

@@ -33,7 +33,7 @@ class ContextTest extends TestCase
     #[Test]
     public function canBeCreatedFromContentObjectRenderer(): void
     {
-        $contentObjectRenderer = $this->createStub(ContentObjectRenderer::class);
+        $contentObjectRenderer = self::createStub(ContentObjectRenderer::class);
         $subject = Context::createFromContentObjectRenderer($contentObjectRenderer);
 
         self::assertInstanceOf(Context::class, $subject);
@@ -42,7 +42,7 @@ class ContextTest extends TestCase
     #[Test]
     public function providesTableNameInheritedFromContentObjectRenderer(): void
     {
-        $contentObjectRenderer = $this->createStub(ContentObjectRenderer::class);
+        $contentObjectRenderer = self::createStub(ContentObjectRenderer::class);
         $contentObjectRenderer->method('getCurrentTable')->willReturn('tx_calendar_example_table');
         $subject = Context::createFromContentObjectRenderer($contentObjectRenderer);
 
@@ -52,7 +52,7 @@ class ContextTest extends TestCase
     #[Test]
     public function providesDatabaseRowInheritedFromContentObjectRenderer(): void
     {
-        $contentObjectRenderer = $this->createStub(ContentObjectRenderer::class);
+        $contentObjectRenderer = self::createStub(ContentObjectRenderer::class);
         $contentObjectRenderer->data = [
             'uid' => 10,
             'pid' => 1,
