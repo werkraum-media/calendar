@@ -32,7 +32,7 @@ class NullDataFactoryTest extends TestCase
     public function returnsNull(): void
     {
         $subject = new NullDataFactory();
-        $day = $this->createStub(Day::class);
+        $day = self::createStub(Day::class);
         self::assertNull($subject->getData($day));
     }
 }

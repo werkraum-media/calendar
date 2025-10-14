@@ -275,7 +275,7 @@ class CalendarControllerTest extends FunctionalTestCase
 
         self::assertSame(200, $result->getStatusCode());
         $html = $result->getBody()->__toString();
-        self::assertStringContainsString((new DateFormatter())->strftime('%B %Y', 'now', 'de-DE'), $html);
+        self::assertStringContainsString((new DateFormatter())->strftime('%B %Y', 'now', 'en-GB'), $html);
         self::assertStringContainsString('exampleValue', $html);
     }
 

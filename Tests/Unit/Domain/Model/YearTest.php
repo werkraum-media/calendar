@@ -114,7 +114,7 @@ class YearTest extends TestCase
     {
         $subject = new Year(2020);
 
-        $month = $this->createStub(Month::class);
+        $month = self::createStub(Month::class);
         $month->method('isActive')->willReturn(false);
         $months = [$month];
         $this->forceProperty($subject, 'months', $months);
@@ -127,7 +127,7 @@ class YearTest extends TestCase
     {
         $subject = new Year(2020);
 
-        $month = $this->createStub(Month::class);
+        $month = self::createStub(Month::class);
         $month->method('isActive')->willReturn(true);
         $months = [$month];
         $this->forceProperty($subject, 'months', $months);

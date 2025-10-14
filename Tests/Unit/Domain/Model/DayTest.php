@@ -107,7 +107,7 @@ class DayTest extends TestCase
     {
         $subject = new Day(new \DateTime('2020-10-19'));
 
-        $foreignData = $this->createStub(IsDayActive::class);
+        $foreignData = self::createStub(IsDayActive::class);
         $foreignData->method('isActive')->willReturn(false);
 
         $this->forceProperty($subject, 'initialized', true);
@@ -121,10 +121,10 @@ class DayTest extends TestCase
     {
         $subject = new Day(new \DateTime('2020-10-19'));
 
-        $foreignData = $this->createStub(IsDayActive::class);
+        $foreignData = self::createStub(IsDayActive::class);
         $foreignData->method('isActive')->willReturn(true);
 
-        $factory = $this->createStub(ForeignDataFactory::class);
+        $factory = self::createStub(ForeignDataFactory::class);
         $factory->method('getData')->willReturn($foreignData);
 
         GeneralUtility::addInstance(ForeignDataFactory::class, $factory);
