@@ -39,7 +39,7 @@
         }
     },
     "require-dev": {
-        "codappix/typo3-php-datasets": "^1.5",
+        "codappix/typo3-php-datasets": "^1.6 || ^2.1",
         "friendsofphp/php-cs-fixer": "^3.11",
         "phpstan/phpstan": "^1.12",
         "phpstan/phpstan-phpunit": "^1.0",
