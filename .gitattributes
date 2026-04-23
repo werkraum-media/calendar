@@ -9,3 +9,5 @@ phpstan.neon export-ignore
 phpunit.xml.dist export-ignore
 
 shell.nix export-ignore
+
+xliff-core-1.2-strict.xsd export-ignore
